@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>APSI Preventative Maintenance Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#E9EEF1; --surface:#FFFFFF; --surface-2:#F3F6F8; --locked:#F1F4F6; --field:#FFFFFF;
+  --ink:#1F2328; --ink-2:#4A5560; --ink-3:#717D88; --line:#C9D3DA; --line-2:#DFE6EB;
+  --brand:#25AAE3; --brand-deep:#176B97; --on-deep:#FFFFFF; --brand-soft:#E2F2FB;
+  --ok:#23804A; --ok-soft:#DDF2E4; --warn:#9A5208; --warn-soft:#FCEBD3; --bad:#B42318; --bad-soft:#FDE5E2;
+  --shadow:0 1px 2px rgba(31,35,40,.07),0 4px 14px rgba(31,35,40,.05);
+  --font:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-c:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --page:#11171C; --surface:#192229; --surface-2:#1F2A32; --locked:#1C262D; --field:#141C22;
+    --ink:#E6ECF0; --ink-2:#B2BFC8; --ink-3:#8494A0; --line:#33434F; --line-2:#283640;
+    --brand:#4DBDEB; --brand-deep:#1E7DB0; --on-deep:#FFFFFF; --brand-soft:#173246;
+    --ok:#6CC28F; --ok-soft:#173226; --warn:#F0A65A; --warn-soft:#3A2915; --bad:#F2877C; --bad-soft:#3B1E1B;
+    --shadow:0 1px 2px rgba(0,0,0,.4); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#11171C; --surface:#192229; --surface-2:#1F2A32; --locked:#1C262D; --field:#141C22;
+  --ink:#E6ECF0; --ink-2:#B2BFC8; --ink-3:#8494A0; --line:#33434F; --line-2:#283640;
+  --brand:#4DBDEB; --brand-deep:#1E7DB0; --on-deep:#FFFFFF; --brand-soft:#173246;
+  --ok:#6CC28F; --ok-soft:#173226; --warn:#F0A65A; --warn-soft:#3A2915; --bad:#F2877C; --bad-soft:#3B1E1B;
+  --shadow:0 1px 2px rgba(0,0,0,.4); color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 90px)}
+html,body{overflow-x:clip}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand-deep);outline-offset:2px}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:3px solid var(--brand)}
+.top-in{max-width:1220px;margin:0 auto;display:flex;align-items:center;gap:14px 18px;padding:10px 20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:16px;margin-right:auto;min-width:0}
+.logo{display:block;background:#fff;border-radius:6px;padding:4px 6px;line-height:0}
+.logo img{height:40px;width:auto;display:block}
+.brand-t{font-family:var(--font-c);font-weight:600;font-size:21px;line-height:1.1;border-left:1px solid var(--line);padding-left:16px}
+.brand-t small{display:block;font-family:var(--font);font-weight:400;font-size:12.5px;color:var(--ink-3)}
+.top-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.top-ctl label{font-size:12.5px;color:var(--ink-3);display:flex;flex-direction:column;gap:1px}
+.top-ctl select{background:var(--field);border:1px solid var(--line);border-radius:6px;padding:5px 8px;font-size:14px;min-height:34px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 14px;font-weight:600;font-size:14.5px;cursor:pointer;color:var(--ink);min-height:38px}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--brand-deep);border-color:var(--brand-deep);color:var(--on-deep)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger{color:var(--bad)}
+.btn.danger:hover{background:var(--bad-soft)}
+.btn.solid-danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.top .btn{align-self:flex-end}
+
+.demo-note{max-width:1220px;margin:0 auto;padding:8px 20px 0;font-size:13px;color:var(--ink-3)}
+main{max-width:1220px;margin:0 auto;padding:12px 20px 120px}
+
+/* PS tag plate */
+.plate{background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(270px,360px) 1fr}
+.tag{background:var(--brand-deep);color:var(--on-deep);border-radius:9px 0 0 9px;padding:14px 18px 16px;position:relative;overflow:visible}
+.tag::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 140% at 110% -20%,rgba(37,170,227,.55),transparent 60%);pointer-events:none}
+.tag>*{position:relative}
+.tag-l{font-size:13px;font-weight:600;color:rgba(255,255,255,.85)}
+.combo{position:relative;margin-top:6px}
+.combo input{width:100%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.45);border-radius:6px;padding:5px 10px;font-family:var(--font-c);font-size:32px;font-weight:700;letter-spacing:.05em;color:#fff;text-transform:uppercase}
+.combo input::placeholder{color:rgba(255,255,255,.6);font-weight:500;letter-spacing:0;text-transform:none;font-size:22px}
+.combo input:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.2)}
+.list{position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.2);max-height:330px;overflow:auto;z-index:15;display:none}
+.list.open{display:block}
+.opt{display:flex;gap:10px;align-items:baseline;padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--line-2)}
+.opt:last-child{border-bottom:0}
+.opt[aria-selected="true"],.opt:hover{background:var(--brand-soft)}
+.opt b{font-family:var(--font-c);font-size:17px;letter-spacing:.03em;min-width:80px}
+.opt span{font-size:13.5px;color:var(--ink-2)}
+.opt .flag{margin-left:auto;font-size:12px;color:var(--warn);font-weight:600;white-space:nowrap}
+.tag-meta{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin-top:12px;font-size:13.5px;color:rgba(255,255,255,.85)}
+.tag-meta strong{font-family:var(--font-c);font-size:19px;letter-spacing:.03em;color:#fff;text-align:right}
+.plate-r{padding:14px 18px;display:flex;flex-direction:column;gap:10px;justify-content:center;min-width:0}
+.plate-addr{font-family:var(--font-c);font-size:25px;font-weight:600;line-height:1.15}
+.plate-sub{color:var(--ink-2);font-size:14px}
+.plate-empty{color:var(--ink-3);font-size:15px;max-width:56ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;padding:3px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line-2);color:var(--ink-2)}
+.chip.ok{background:var(--ok-soft);border-color:transparent;color:var(--ok);font-weight:600}
+.chip.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn);font-weight:600}
+.chip.bad{background:var(--bad-soft);border-color:transparent;color:var(--bad);font-weight:600}
+.chip.info{background:var(--brand-soft);border-color:transparent;color:var(--brand-deep)}
+
+/* Panels */
+.grid{display:grid;grid-template-columns:minmax(320px,400px) 1fr;gap:16px;margin-top:16px;align-items:start}
+.grid>*{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+.panel+.panel{margin-top:16px}
+.panel h2{font-family:var(--font-c);font-weight:600;font-size:19px;margin:0;padding:11px 16px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:4px 8px;flex-wrap:wrap}
+.panel h2 small{font-family:var(--font);font-weight:400;font-size:13px;color:var(--ink-3);margin-left:auto}
+.pbody{padding:14px 16px 16px}
+.grp{font-family:var(--font-c);font-size:16px;font-weight:600;margin:18px 0 8px;color:var(--ink)}
+.grp:first-child{margin-top:0}
+.note{font-size:13px;color:var(--ink-3);margin:0 0 12px}
+
+.mrow{display:grid;grid-template-columns:150px 1fr;align-items:center;gap:10px;padding:3px 0}
+.mrow>label,.mrow>.k{font-size:13.5px;color:var(--ink-2)}
+.mrow input,.mrow select{width:100%;background:var(--field);border:1px solid var(--line);border-radius:6px;padding:6px 9px;font-size:14.5px;min-height:36px}
+.mrow input:focus,.mrow select:focus{outline:none;border-color:var(--brand-deep);box-shadow:0 0 0 3px var(--brand-soft)}
+.mrow .ro{padding:6px 9px;min-height:36px;display:flex;align-items:center;gap:6px;background:var(--locked);border:1px dashed var(--line);border-radius:6px;font-size:14.5px;font-weight:500;overflow-wrap:anywhere}
+.mrow .ro svg{flex:none;color:var(--ink-3)}
+.mrow.changed input,.mrow.changed select{border-color:var(--brand);box-shadow:inset 3px 0 0 var(--brand)}
+.mrow.err input{border-color:var(--bad)}
+.mrow .mono{font-variant-numeric:tabular-nums;letter-spacing:.04em;text-transform:uppercase}
+
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f.full{grid-column:1/-1}
+.f label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.f .req{color:var(--bad)}
+.f input,.f select,.f textarea{background:var(--field);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:15px;min-height:40px;width:100%}
+.f textarea{min-height:76px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--brand-deep);box-shadow:0 0 0 3px var(--brand-soft)}
+.f.err input,.f.err select{border-color:var(--bad)}
+.f .msg{font-size:12.5px;color:var(--bad)}
+.f .ro{padding:8px 10px;min-height:40px;background:var(--locked);border:1px dashed var(--line);border-radius:6px;display:flex;align-items:center;font-weight:500}
+.unit{position:relative}
+.unit input{padding-right:34px}
+.unit::after{content:attr(data-u);position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--ink-3);pointer-events:none}
+
+.flags{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.flag-c{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:var(--field);font-size:14.5px}
+.flag-c input{width:18px;height:18px;accent-color:var(--ok);margin:0;flex:none}
+.flag-c:has(input:checked){background:var(--ok-soft);border-color:var(--ok);font-weight:600}
+.flag-c.issue input{accent-color:var(--warn)}
+.flag-c.issue:has(input:checked){background:var(--warn-soft);border-color:var(--warn)}
+
+.batt-wrap{overflow-x:auto}
+table.batt{width:100%;border-collapse:collapse;min-width:560px}
+table.batt th{font-size:13px;font-weight:600;color:var(--ink-2);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+table.batt th:nth-child(2){width:26%}table.batt th:nth-child(3){width:24%}table.batt th:nth-child(4){width:16%}table.batt th:nth-child(5){width:24%}
+table.batt td{padding:5px 4px;border-bottom:1px solid var(--line-2)}
+table.batt select,table.batt input{width:100%;background:var(--field);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:36px;font-size:14.5px}
+table.batt td.n{width:34px;text-align:center;color:var(--ink-3);font-size:13px}
+table.batt td.x{width:40px}
+.icon-btn{border:0;background:transparent;border-radius:6px;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;color:var(--ink-3)}
+.icon-btn:hover{background:var(--bad-soft);color:var(--bad)}
+.batt-empty{padding:14px 8px;color:var(--ink-3);font-size:14px}
+.batt-foot{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.muted{color:var(--ink-3)}
+.audit{margin:0;padding:0;list-style:none;font-size:13.5px}
+.audit li{padding:6px 0;border-bottom:1px solid var(--line-2);color:var(--ink-2)}
+.audit li:last-child{border-bottom:0}
+.audit b{color:var(--ink);font-weight:600}
+
+/* Action bar */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+.bar-in{max-width:1220px;margin:0 auto;padding:10px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.state{margin-right:auto;font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--ink-3);flex:none}
+.dot.dirty{background:var(--warn)}
+.dot.saved{background:var(--ok)}
+
+/* Drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,16,20,.45);z-index:40;display:none}
+.scrim.open{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--surface);z-index:41;transform:translateX(100%);transition:transform .22s ease,visibility .22s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer:not(.open){visibility:hidden}
+.drawer.open{transform:none}
+.drawer header{padding:14px 16px 0;display:flex;align-items:center;gap:10px}
+.drawer header h2{font-family:var(--font-c);font-size:22px;margin:0;margin-right:auto}
+.tabs{display:flex;gap:2px;padding:10px 12px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:transparent;padding:8px 12px;font-weight:600;font-size:14px;color:var(--ink-3);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brand)}
+.tabs .cnt{font-weight:500;color:var(--ink-3);margin-left:4px}
+.drawer .search{padding:12px 16px;border-bottom:1px solid var(--line-2)}
+.drawer .search input{width:100%;border:1px solid var(--line);border-radius:6px;padding:9px 12px;background:var(--field);font-size:15px}
+.recs{overflow:auto;flex:1}
+.rec{display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;padding:10px 16px;border:0;border-bottom:1px solid var(--line-2);cursor:pointer;width:100%;text-align:left;background:transparent}
+.rec:hover{background:var(--surface-2)}
+.rec.static{cursor:default}
+.rec.static:hover{background:transparent}
+.rec .rn{font-family:var(--font-c);font-size:17px;font-weight:600}
+.rec .ps{font-family:var(--font-c);font-size:17px;letter-spacing:.03em}
+.rec .dt{font-size:13.5px;color:var(--ink-2);text-align:right}
+.rec .meta{grid-column:1/-1;font-size:13px;color:var(--ink-3)}
+.rec .meta b{color:var(--ink-2);font-weight:600}
+.empty{padding:16px;margin:0;color:var(--ink-3)}
+.drawer footer{padding:12px 16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--ink-3);align-items:center}
+
+/* Dialog */
+dialog{border:1px solid var(--line);border-radius:10px;padding:0;width:min(500px,calc(100% - 32px));background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(10,16,20,.5)}
+.dlg{padding:18px 20px 16px;border-top:5px solid var(--brand);border-radius:10px 10px 0 0}
+.dlg.critical{border-top-color:var(--bad)}
+.dlg.warn{border-top-color:var(--warn)}
+.dlg.ok{border-top-color:var(--ok)}
+.dlg h3{margin:0 0 8px;font-family:var(--font-c);font-size:21px;line-height:1.2}
+.dlg p{margin:0 0 8px;color:var(--ink-2)}
+.dlg .src{font-size:12px;color:var(--ink-3);margin:8px 0 0}
+.dlg .fields{margin-top:6px}
+.dlg-acts{display:flex;justify-content:flex-end;gap:8px;padding:12px 20px;border-top:1px solid var(--line-2);background:var(--surface-2);border-radius:0 0 10px 10px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:8px;font-size:14.5px;opacity:0;transition:opacity .2s,transform .2s;z-index:60;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.review{margin-top:16px;display:flex;gap:12px 16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 16px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:14.5px}
+.review[hidden]{display:none}
+.review.pending{background:var(--warn-soft);border-color:var(--warn)}
+.review.done{background:var(--ok-soft);border-color:transparent}
+.review .muted{color:var(--ink-2)}
+.btn.alert{border-color:var(--warn);color:var(--warn)}
+.note-q{color:var(--ink);font-style:italic}
+@media (max-width:900px){
+  .plate{grid-template-columns:1fr}
+  .tag{border-radius:9px 9px 0 0}
+  .grid{grid-template-columns:1fr}
+  .side{order:2}
+}
+@media (max-width:560px){
+  .top{position:static}
+  .top-in{padding:10px 14px}
+  .logo img{height:32px}
+  .brand-t{font-size:18px;padding-left:12px}
+  .brand-t small{display:none}
+  .top-ctl{width:100%}
+  .top-ctl label{flex:1}
+  main{padding:10px 12px 150px}
+  .demo-note{padding:8px 14px 0}
+  .fields{grid-template-columns:1fr}
+  .mrow{grid-template-columns:1fr;gap:3px}
+  .bar-in{padding:8px 12px;gap:8px}
+  .state{width:100%;font-size:13px}
+  .bar .btn{padding:8px 10px;font-size:14px}
+  #btnPrint{display:none}
+  #btnSave{flex:1}
+  .toast{bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+}
+@media (prefers-reduced-motion:reduce){.drawer,.toast{transition:none}}
+@media print{
+  body{background:#fff;color:#000;font-size:11.5px}
+  body::before,.bar,.demo-note,.drawer,.scrim,.batt-foot,.icon-btn,.top-ctl,.no-print{display:none!important}
+  :root{padding:0}
+  .top{position:static;border-bottom:2px solid #000}
+  main{padding:0;max-width:none}
+  .panel,.plate{box-shadow:none;border-color:#999;break-inside:avoid}
+  .tag{background:#fff;color:#000;border-right:2px solid #000}
+  .tag::before{display:none}
+  .combo input,.tag-meta,.tag-meta strong,.tag-l{color:#000;background:#fff;border:0;padding:0}
+  .grid{grid-template-columns:320px 1fr}
+  input,select,textarea{border:0!important;border-bottom:1px solid #999!important;border-radius:0!important;box-shadow:none!important;appearance:none;min-height:0!important;padding:2px 0!important;background:#fff!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <span class="logo"><img src="data:image/jpeg;base64,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" alt="Advanced Powering Services, Inc."></span>
+      <div class="brand-t">Preventative Maintenance Form<small>Field service PM entry</small></div>
+    </div>
+    <div class="top-ctl">
+      <label>Service area<select id="area"></select></label>
+      <label>Signed in as<select id="user"></select></label>
+      <button class="btn" id="btnReview" type="button" hidden>Review queue</button>
+      <button class="btn" id="btnFind" type="button">Find record</button>
+      <button class="btn primary" id="btnNew" type="button">New PM</button>
+    </div>
+  </div>
+</header>
+<p class="demo-note">Demonstration with sample sites and equipment. The rules and messages follow the APSI Access PM form. Fields marked * are required. Switch “Signed in as” to see what each access level can do. Records you save stay in this browser only.</p>
+
+<main>
+  <section class="plate" aria-label="Power supply">
+    <div class="tag">
+      <div class="tag-l"><label for="psInput">PS ID number</label></div>
+      <div class="combo">
+        <input id="psInput" autocomplete="off" spellcheck="false" placeholder="Type or pick a PS ID" role="combobox" aria-expanded="false" aria-controls="psList" aria-autocomplete="list">
+        <div class="list" id="psList" role="listbox"></div>
+      </div>
+      <div class="tag-meta">
+        <span>Record number</span><strong id="recNum">New</strong>
+        <span>Last site visit</span><strong id="lastVisit">–</strong>
+      </div>
+    </div>
+    <div class="plate-r" id="plateR"></div>
+  </section>
+
+  <div class="review" id="reviewBar" hidden></div>
+  <div class="grid">
+    <aside class="side">
+      <section class="panel" aria-label="Master record">
+        <h2>Site and power supply <small>master record</small></h2>
+        <div class="pbody" id="master"></div>
+      </section>
+    </aside>
+
+    <div>
+      <form class="panel" id="pmForm" novalidate autocomplete="off" onsubmit="return false">
+        <h2>This visit</h2>
+        <div class="pbody">
+          <div class="fields">
+            <div class="f"><label for="remedy">Remedy MNT ticket # <span class="req">*</span></label><input id="remedy" inputmode="numeric" placeholder="8 digits"><div class="msg"></div></div>
+            <div class="f"><label for="tech">Tech <span class="req">*</span></label><select id="tech"></select><div class="msg"></div></div>
+            <div class="f"><label for="date">Service date <span class="req">*</span></label><input type="date" id="date"><div class="msg"></div></div>
+            <div class="f"><label for="uno">UNO ticket #</label><input id="uno"><div class="msg"></div></div>
+            <div class="f"><label for="start">Onsite time <span class="req">*</span></label><input type="time" id="start"><div class="msg"></div></div>
+            <div class="f"><label for="end">Departure time <span class="req">*</span></label><input type="time" id="end"><div class="msg"></div></div>
+            <div class="f"><label for="vin">Input voltage</label><div class="unit" data-u="V"><input id="vin" inputmode="decimal"></div><div class="msg"></div></div>
+            <div class="f"><label for="a1">Output current 1</label><div class="unit" data-u="A"><input id="a1" inputmode="decimal"></div><div class="msg"></div></div>
+            <div class="f"><label for="a2">Output current 2</label><div class="unit" data-u="A"><input id="a2" inputmode="decimal"></div><div class="msg"></div></div>
+            <div class="f"><label>Data entry employee</label><div class="ro" id="entryUser">–</div></div>
+            <div class="f full"><label for="comments">Comments <span class="req">*</span></label><select id="comments"></select><div class="msg"></div></div>
+            <div class="f full"><label for="repairs">Repairs</label><textarea id="repairs" placeholder="Minor repairs made on site"></textarea><div class="msg"></div></div>
+          </div>
+          <div class="grp" style="margin-top:18px">Status</div>
+          <div class="flags" id="flags"></div>
+        </div>
+      </form>
+
+      <section class="panel" aria-label="Batteries">
+        <h2>Batteries <small id="battCount">0 rows</small></h2>
+        <div class="pbody">
+          <div class="batt-wrap">
+            <table class="batt">
+              <thead><tr><th scope="col"><span style="position:absolute;left:-9999px">Row</span></th><th scope="col">Batt ID</th><th scope="col">Manufacture</th><th scope="col">Date code</th><th scope="col">Status</th><th scope="col"><span style="position:absolute;left:-9999px">Remove</span></th></tr></thead>
+              <tbody id="battBody"></tbody>
+            </table>
+          </div>
+          <div class="batt-foot">
+            <button class="btn" type="button" id="addBatt">Add battery</button>
+            <button class="btn" type="button" id="addString">Add string of 3</button>
+            <span class="muted" style="font-size:13px">Batteries save with this PM record.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="auditPanel" hidden aria-label="Change history">
+        <h2>Change history</h2>
+        <div class="pbody"><ul class="audit" id="audit"></ul></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="state" id="state"></div>
+    <button class="btn no-print" type="button" id="btnPrint">Print form</button>
+    <button class="btn danger" type="button" id="btnDelete" disabled>Delete record</button>
+    <button class="btn" type="button" id="btnUndo" disabled>Undo record</button>
+    <button class="btn primary" type="button" id="btnSave">Save PM</button>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Find record and database activity" aria-hidden="true">
+  <header><h2>Find record</h2><button class="btn" type="button" id="closeDrawer">Close</button></header>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="search"><input id="q" type="search" placeholder="Search"></div>
+  <div class="recs" id="recs"></div>
+  <footer><span id="recTotal"></span><button class="btn danger" type="button" id="resetDemo">Reset sample data</button></footer>
+</aside>
+
+<dialog id="dlg"><div class="dlg" id="dlgBox"><h3 id="dlgT"></h3><div id="dlgB"></div></div><div class="dlg-acts" id="dlgA"></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const STORE="apsi_pm_demo_v4";
+const ADMIN="the Database Administrator";
+
+/* ===== Lookup lists (tbl_maint_selections stand-ins; value lists copied from the Access form) ===== */
+const SEL={"tech":["Aaron","Alan","Aldo","Alex","Amir","Amir/Alex","Amir/Taylor H","Austin B","BJ","BJ/Donta","BJ/GR","BJ/Matt","BJ/Tevis","BJ/Thomas","Blake","Bob","Bob/BJ","Bob/Dalton","Bob/Donta","Bob/GR","Bob/Joe","Bob/Martin G","Bob/Matt","Bob/Quan","Bob/Tevis","Brandon","Brandon S","Brandon/Breckin","Brandon/Cooper/Larry","Brandon/Darrell","Brandon/Jeff","Brandon/Jonathan","Brandon/Larry","Brandon/Lynn","Brandon/Ray M","Brandon/Skyler","Brandon/Thomas K","Breckin","Breckin/Thomas K","Bryan G","Charles","Chepe","Chepe/Eduardo","Chepe/Eduardo/Rob","Chepe/Junior","Chepe/Kristian","Chepe/Mauricio","Christian","Christian/Darrian","Christian/Joe","Christian/Jose","Christian/Tom","Cooper","Cooper/Aaron","Cooper/Larry","Dalton","Dalton/Jason T","Dalton/Larry","Dalton/Tyler","Dalton/Vernon","Daniel","Daniel/Christian","Daniel/Gio","Daniel/Jason C","Daniel/Joe B","Daniel/Jose","Daniel/Lynn","Daniel/Martin M","Daniel/Ron B","Daniel/Steve A","Daniel/Tom","Darrell","Darrell/Charles","Darrell/JC","Darrell/Jason","Darrell/Jason/Thomas","Darrell/Thomas","Darrian","David C","David C/Ryan","Domingo","Domingo/Alan","Domingo/Aldo","Domingo/Alex","Domingo/Amir","Domingo/Blake","Domingo/Brandon S","Domingo/Chepe","Domingo/Fernando","Domingo/Juan","Domingo/Junior","Domingo/Kelvin","Domingo/Kevin C","Domingo/Kristian","Domingo/Mario","Domingo/Martin G","Domingo/Mauricio","Domingo/Ron B","Domingo/Taylor H","Donta","Donta/GR","Donta/JC","Donta/Mark","Donta/Matt S","Donta/Quan","Donta/Quan/Tevis","Donta/Tevis","Donta/Wayne","Eduardo","Eduardo/Alan","Eduardo/Eric","Eduardo/Kristian","Eduardo/Mauricio","Eric","Fernando","Fernando C","Fernando/Blake","Fernando/Chepe","Fernando/Taylor H","GR","Gio","JC","JC/David C","JC/Ryan","JC/Thomas","James C","James C/Christian","James C/JC","James C/Joe B","James C/River","James C/Uriel","Jaquarrius","Jason","Jason C","Jason T","Jason T/Logan","Jason T/Maison","Jason/Larry","Jason/Rich","Jason/Thomas","Jason/Tyler","Jeff","Joe","Joe B","Joe B/Joe S","Joe S","Joe S/Brian","Joe S/Logan","Joe S/Paul","Joe S/Robbie","Joe/Bryan G","Joe/David C","Joe/James C","Joe/Jon","Joe/Matt S","Joe/Quan","Joe/Tom","Jon","Jon B","Jon/Ted","Jonathan","Jordan","Jose","Jose/James C","Jose/Joe","Jose/Tom","Josh","Josh H","Josh H/Austin B","Josh H/JQ","Josh/BJ","Josh/BJ/Matt S","Josh/Bob","Josh/Bob/BJ","Josh/Darrian","Josh/Donta","Josh/Norman","Josh/Quan","Josh/Quan/BJ","Josh/Quan/Matt S","Josh/Quan/Tevis","Josh/Tevis","Juan","Juan/Alan","Juan/Amir","Juan/Blake","Juan/Chepe","Juan/Eduardo","Juan/Fernando","Juan/Mario","Juan/Mauricio","Junior","Kelvin","Kevin C","Kevin C/Alex","Kristian","Kyle","Kyle/Joe S","Kyle/Robbie","Kyle/Vernon","Lance","Lance/Fernando","Lance/Fernando/Uriel","Lance/Uriel","Larry","Larry/Logan","Leon","Logan","Logan/Jason","Logan/Maison","Logan/Rich","Lynn","Lynn/Christian","Lynn/Domingo","Lynn/JC","Lynn/James C","Lynn/Jeff","Lynn/Joe","Lynn/Jon","Lynn/Jose","Lynn/Josh H","Lynn/Martin M","Lynn/River","Lynn/Uriel","Lynn/Wayne","Maison","Mario","Mark","Mark/Quan","Martin F","Martin G","Martin G/Alex","Martin G/Fernando","Martin G/Juan","Martin G/Kevin C","Martin G/Lance","Martin G/Ron B","Martin M","Martin M/Gio","Martin M/JC","Martin M/Jon","Martin M/Ted","Matt","Matt S","Matt/Dalton","Matt/Donta","Matt/JC","Matt/Norman","Mauricio","Nick","Norman","Norman/Darrian","Norman/JC","Norman/Joe","Norman/Quan","Norman/Ryan","Norman/Tevis","Paul","Paul/Jason","Paul/Kyle","Paul/Larry","Paul/Vernon","Quan","Quan/BJ","Quan/David C","Quan/GR","Quan/GR/Donta","Quan/JC","Quan/Matt S","Quan/Matt S/Thomas","Quan/Matt/Matt S","Quan/Tevis","Quan/Tevis/BJ","Quan/Tevis/Matt S","Rachael","Ray M","Rich","River","Robbie","Robbie/Brian","Robbie/Dalton","Robbie/Jason T","Robbie/Logan","Robbie/Maison","Robert B","Ron B","Ron B/Joe","Ron B/Jon","Ron B/Scott","Ron B/Steve A","Ryan","Scott","Siri","Siri/Alan","Siri/Amir","Siri/Chepe","Siri/Domingo","Siri/Eduardo","Siri/Fernando","Siri/Juan","Siri/Juan/Domingo","Siri/Mario","Skyler","Skyler/Jonathan","Steve A","Steve A/Christian","Steve A/Dalton","Steve A/Gio","Steve A/JC","Steve A/James C","Steve A/Joe","Steve A/Jon","Steve A/Jose","Steve A/Lynn","Steve A/Matt","Steve A/Nick","Steve A/Uriel","Steve A/Wayne","Storm","Taylor H","Ted","Tevis","Tevis/Matt S","Thomas","Thomas K","Thomas/Charles","Tim","Tom/Steve A","Tyler","Uriel","Uriel/Joe B","Uriel/Wayne","Vernon","Vernon/Darrell","Vernon/Jason","Vernon/Jason T","Vernon/Logan","Vernon/Maison","Vernon/Robbie","Wayne","Wayne/Dalton","Wayne/JC","Wayne/Nick"],"cab":["Antec 3","CE-3","CE-8","CE-9","CESC-3X","CPS-1","CPS-6","CPS-9","LPE","Lectro","Lectro 3","Lectro 6","Lectro AC","Lectro DC","Moore","MultiLink3","MultiLink4","MultiLink6","MultiLink8","NPS","PMD","PN-3","PN-4","PN-6","PN-FN","PN1 + 1","PUP","PWE","PWE-3","PWE-4","PWE-6","PWE-8","Reliant","Rhino 6","SC-CE3","UPE","UPE-3","UPE-4","UPE-6","UPE-9","UPEM","Unverified"],"xpdr":["SI","IDH4X","IDH4","IDH3","GPM-4","ET","EDH4","EDH3","EDH2","DSM3X","DSM3","DPM","DM3X","CMX-A","CMOA","BPS"],"mfr":["Alpha","Antec","Genasys","Lectro","Meyers","Multi Link"],"psType":["AM","APC","APC 36V","APC 48V","CPR","LCM-1350","LCM-2000","Lectro Analog","Lectro CPR (48V)","Lectro ZTT","Lectro ZTT Plus","Lectro ZTT+ 3615","XM","XM2-1350","XM2-300HP","XM2-615","XM2-906HP","XM2-915","XM2-918HP","XM2-922","XM2-922HP","XM2-924HP","XM3-915HP","XM3-918HP","XM3.1-915HP","XM3.1-918HP","XM6015"],"apu":["2.7 DC 36V Generac","3.0 DC 48V Generac","3.0 DC 96V Generac","3.5 DC 36V Kohler","3.5 DC 48V Kohler","5.0 DC 36V Kohler","5.0 DC 48V Kohler","6.0 DC 36V Generac","6.0 DC 36V Kohler 6VSG","6.0 DC 48V Kohler 6VSG","6.2k AC Generac","7.5 DC 48V Kohler","7.5 DC 96V Generac","8.0 AC 120/240V Generac"],"bat":[{"id":361,"make":"12-105FNSG"},{"id":17,"make":"165-GXL Alpha"},{"id":3,"make":"180-GXL Alpha"},{"id":7,"make":"195-GXL Alpha"},{"id":6,"make":"210-GXL Alpha"},{"id":4,"make":"220-GXL Alpha"},{"id":15,"make":"3.5 HP Alpha"},{"id":14,"make":"4.0 HP Alpha"},{"id":23,"make":"51-500"},{"id":21,"make":"A1210FTX"},{"id":2,"make":"ALPHA"},{"id":22,"make":"APSI-PS36LFP"},{"id":5,"make":"C D"},{"id":11,"make":"DAYSTARTER"},{"id":20,"make":"Deka-Unigy"},{"id":13,"make":"Dynasty"},{"id":8,"make":"Marathon"},{"id":1,"make":"MK"},{"id":12,"make":"Nic-Lyte"},{"id":9,"make":"Other"},{"id":24,"make":"SBS B10"},{"id":19,"make":"SBS-190F"},{"id":18,"make":"SBS-C11F"},{"id":10,"make":"Tel-1290"},{"id":16,"make":"Unverified"}],"batStatus":["DWO","EXC","Good","New","RED","Redeployed","Stolen"],"isCategory":{"Access Issue":["Military Base","Obstruction - Animal Issue","Obstruction - Backyard/Easement","Obstruction - Construction","Obstruction - Inside Building","Obstruction - Locked/Gated","Obstruction - Misc. - See Notes","Obstruction - Parking Issue","Obstruction - Pole","Unable to Locate Site"],"Damage":["Major Damage - See Notes","Minor Damage - See Notes"],"Equipment Replacement":["Equip. Replacement - Battery","Equip. Replacement - Gen","Equip. Replacement - Module"],"Misc.":["Misc. - See Notes"],"Utility Issue":["Powering - No AC Power to Site","Utility Issue - Misc. - See Notes"]},"isImpact":["APSI - Major - Long Term","APSI - Major - Short Term","APSI - Minor - Long Term","APSI - Minor - Short Term","COX - Major - Long Term","COX - Major - Short Term","COX - Minor - Long Term","COX - Minor - Short Term"]};
+const L={
+  comments:["1-No Problem Found","2-Battery Failure","3-Module Failure","4-Communication Failure","5-Vandalism","6-Other"],
+  access:["Aerial","Ground","Aerial Vault","Ground Vault","Unverified"],
+  tech:SEL.tech, cab:SEL.cab, xpdr:SEL.xpdr, mfr:SEL.mfr, psType:SEL.psType, apu:SEL.apu,
+  bat:SEL.bat, batStatus:SEL.batStatus, isCategory:SEL.isCategory, isImpact:SEL.isImpact,
+  trays:(()=>{const a=[];for(let i=1;i<=4;i++)a.push(i+"-bat-"+i+"-tray");for(let i=1;i<=4;i++)a.push((i+4)+"-bat-"+i+"-lbsm");for(let i=1;i<=4;i++)a.push((i+8)+"-bat-"+i+"-rbsm");a.push("APU Ign. Batt.");for(let s=1;s<=8;s++)for(let b=1;b<=4;b++)a.push(s+"-Bat-"+b);return a})()
+};
+const batName=id=>{const b=L.bat.find(x=>String(x.id)===String(id));return b?b.make:""};
+const SOLO=L.tech.filter(t=>!t.includes("/"));
+const USERS=[{id:101,name:"Demo Data Entry",role:"Data entry",tier:1},{id:102,name:"Demo Supervisor",role:"Supervisor",tier:2},{id:103,name:"Demo Administrator",role:"Administrator",tier:3}];
+/* Field rules: required fields stop the save (escape path: supervisor review, or administrator override with a reason). Major fields need a change note once a record exists. */
+const VLABEL={ps:"PS ID",remedy:"Remedy MNT ticket #",tech:"Tech",date:"Service date",uno:"UNO ticket #",start:"Onsite time",end:"Departure time",vin:"Input voltage",a1:"Output current 1",a2:"Output current 2",comments:"Comments",repairs:"Repairs"};
+const REQUIRED=["remedy","tech","date","start","end","comments"];
+const OPTIONAL=["uno","vin","a1","a2","repairs"];
+const MAJOR=new Set(["ps","remedy","tech","date","start","end","comments","m:rf","m:meter","m:sn","m:psType","bats","flag:ba","flag:hpBatt","flag:eqFail"]);
+const AREAS={
+  "Phoenix":{zip:85000,cities:["Phoenix","Tempe","Mesa","Glendale","Chandler"],mgr:"Sample Manager A",system:"Cox Phoenix"},
+  "Las Vegas":{zip:89100,cities:["Las Vegas","Henderson","North Las Vegas"],mgr:"Sample Manager B",system:"Cox Las Vegas"},
+  "San Diego":{zip:92100,cities:["San Diego","Chula Vista","El Cajon","La Mesa"],mgr:"Sample Manager C",system:"Cox San Diego"},
+  "Oklahoma City":{zip:73100,cities:["Oklahoma City","Edmond","Norman","Moore"],mgr:"Sample Manager D",system:"Cox Oklahoma"}
+};
+const FLAGS=[["ba","Battery analysis"],["onUno","PM on UNO"],["psInst","PS installed"],["invInst","Inverter installed"],["xpInst","Transponder installed"],["hpBatt","HP battery failure"],["eqFail","Equipment failure"]];
+const ISSUE_OPEN=["Yes","Completed With Issue","Completed With Issue-RO"];
+
+/* ===== Dates ===== */
+const z2=n=>String(n).padStart(2,"0");
+const iso=(d=new Date())=>d.getFullYear()+"-"+z2(d.getMonth()+1)+"-"+z2(d.getDate());
+const addDays=(s,n)=>{const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return iso(d)};
+const fmtD=s=>s?new Date(s.length>10?s:s+"T12:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"";
+const fmtTS=s=>{const d=new Date(s);return fmtD(iso(d))+" at "+d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})};
+const thisYear=()=>new Date().getFullYear();
+
+/* ===== Sample database (tbl_master_site_locations, tbl_master_ps_configurations, tbl_ps_maint_pm, tbl_maint_repairs_summary, A_ISSUE_SITES_EVENT_LOG) ===== */
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function buildDB(){
+  const R=rng(20261110), pick=a=>a[Math.floor(R()*a.length)], LET="ABCDEFGHJKLMNPRSTVWXYZ";
+  const STREETS=["Sample Ave","Demo Rd","Mesquite Ln","Canyon View Dr","Juniper St","Ridge Pkwy","Copperline Rd","Harbor Pt","Prairie Wind Dr","Signal Hill Rd","Granite Way","Lantern Ct"];
+  const hex=()=>Array.from({length:12},()=>"0123456789ABCDEF"[Math.floor(R()*16)]).join("");
+  const db={sites:{},ps:{},pms:[],billing:[],issueLog:[],masterLog:[],activity:[],nextRn:1204600,nextAct:88200};
+  function addSite(area,over={}){
+    const a=AREAS[area]; let loc;
+    do{loc=(100+Math.floor(R()*9800))+" "+pick(["N","S","E","W"])+" "+pick(STREETS)}while(db.sites[loc]);
+    const mods=2+Math.floor(R()*3);
+    const s=Object.assign({location:loc,ServiceArea:area,city:pick(a.cities),zip:String(a.zip+Math.floor(R()*90)),
+      q_s:(100+Math.floor(R()*800))+"-"+LET[Math.floor(R()*8)]+(1+Math.floor(R()*9)),PhysicalAccessibility:pick(L.access.slice(0,4)),
+      utility_meter:String(10000000+Math.floor(R()*89999999)),cab_type:pick(["PWE-3","PWE-6","UPE-3","UPE-6","CPS-9","MultiLink4"]),gen_type:R()<.7?"":pick(L.apu),
+      number_of_modules:mods,profile:pick(["A","B","C"])+","+mods+",XM",billing_amount:[145,165,185][Math.floor(R()*3)],
+      system:a.system,coxManager:a.mgr,pmQuota:1,baQuota:R()<.6?1:0,pmnq:0,
+      IssueSite:null,IssueSiteDate:null,IssueSiteNotes:null,IssueCategory:null,IssueType:null,IssueDetails:null,Issue_DWO_Ticket:null,
+      CurrentYearCompletionStatus:"NO - PM Completed",date_pm_comp:null},over);
+    db.sites[s.location]=s; return s;
+  }
+  function addPS(area,dev,over={},siteOver={}){
+    const s=addSite(area,siteOver);
+    const p=Object.assign({device:dev,address:s.location,Inactive:false,device_type:pick(["IDH4","DM3X","IDH3","SI","CMOA","EDH4"]),module_type:pick(["XM2-915","XM2-922","XM2-1350","XM3-918HP","XM2-924HP","XM3.1-918HP"]),rf_address:hex(),
+      ps_sn:"S"+(2000000+Math.floor(R()*7999999)),PS_Manufacturer:R()<.93?"Alpha":"Lectro",CoxDeviceAlias:"SAMPLE_"+dev,Vac_Out:String(87+Math.floor(R()*4)),
+      PSCurrentYearUpdatedPS_Name:"",PSCurrentYearUpdatedAddress:"",PSCurrentYearUpdatedDeviceAlias:""},over);
+    db.ps[dev]=p; return p;
+  }
+  const randDev=()=>(1+Math.floor(R()*8))+LET[Math.floor(R()*22)]+LET[Math.floor(R()*22)]+LET[Math.floor(R()*22)]+(1+Math.floor(R()*9))+"-"+LET[Math.floor(R()*6)];
+  // Phoenix: one PS per Access rule worth showing
+  addPS("Phoenix","4PHX1-A",{rf_address:"0090A2C41B7E"});
+  addPS("Phoenix","4PHX2-A");
+  addPS("Phoenix","4PHX3-B",{},{IssueSite:"Yes",IssueSiteDate:addDays(iso(),-21),IssueSiteNotes:"Utility outage reported by customer NOC.",IssueCategory:"Utility Issue",IssueType:"Powering - No AC Power to Site",IssueDetails:"COX - Major - Short Term",Issue_DWO_Ticket:"DWO-55120",CurrentYearCompletionStatus:"NO - PM Completed"});
+  addPS("Phoenix","4PHX4-A",{},{billing_amount:null,profile:null});
+  addPS("Phoenix","4PHX5-C");
+  addPS("Phoenix","4PHX6-A",{},{pmQuota:null});
+  addPS("Phoenix","4PHX7-B",{rf_address:"00A0BC7741F2"});
+  addPS("Phoenix","4PHX8-A",{Inactive:true});
+  addPS("Phoenix","4PHX9-D",{},{IssueSite:"Completed With Issue",IssueSiteDate:addDays(iso(),-90),IssueSiteNotes:"Gate code changed; access delayed.",IssueCategory:"Access Issue",IssueType:"Obstruction - Locked/Gated",IssueDetails:"APSI - Minor - Short Term",CurrentYearCompletionStatus:"PM Completed"});
+  addPS("Phoenix","5PHX1-A",{},{IssueSite:"Yes",IssueSiteDate:addDays(iso(),-12),IssueSiteNotes:"Cabinet door damaged after the last PM.",IssueCategory:"Damage",IssueType:"Minor Damage - See Notes",IssueDetails:"COX - Minor - Long Term",Issue_DWO_Ticket:"DWO-55407",CurrentYearCompletionStatus:"PM Completed"});
+  addPS("Phoenix","5PHX2-B",{},{pmQuota:0,baQuota:0,pmnq:0});
+  for(const area of ["Las Vegas","San Diego","Oklahoma City"]) for(let i=0;i<8;i++) addPS(area,randDev());
+  // Data problem kept on purpose: a Las Vegas PS shares 4PHX7-B's MAC
+  const lv=Object.values(db.ps).find(p=>db.sites[p.address].ServiceArea==="Las Vegas"); lv.rf_address="00A0BC7741F2";
+  // PM history
+  const R2=rng(77); const t=iso(); const pick2=a=>a[Math.floor(R2()*a.length)];
+  const mkPM=(p,date)=>{
+    const s=db.sites[p.address]; const rn=db.nextRn++;
+    const bats=[];for(let b=0;b<3;b++)bats.push({tray:"1-Bat-"+(b+1),make:String(pick2([3,4,6,7,17])),code:String(21+Math.floor(R2()*4))+z2(1+Math.floor(R2()*52)),status:R2()<.85?"Good":"EXC"});
+    const pm={rn,ps:p.device,date,tech:pick2(SOLO),remedy:String(30000000+Math.floor(R2()*9999999)),uno:"",
+      start:"0"+(8+Math.floor(R2()*2))+":"+z2(Math.floor(R2()*6)*10),end:"1"+Math.floor(R2()*2)+":"+z2(Math.floor(R2()*6)*10),
+      vin:String(118+Math.floor(R2()*6)),a1:(8+R2()*6).toFixed(1),a2:(6+R2()*6).toFixed(1),comments:L.comments[R2()<.8?0:1],repairs:"",
+      flags:{ba:true,onUno:R2()<.6},bats,billingFlag:false,
+      snap:{PM_Address:p.address,PM_PS_Type:p.module_type,PM_Cab_Type:s.cab_type,PM_UtilityMeter:s.utility_meter,PM_RF_Address:p.rf_address,PM_City:s.city},
+      last_maint_visit:null,ts:date+"T17:05:00",entryUser:"Imported history",audit:[{at:date+"T17:05:00",by:"Imported history",what:"Record created"}]};
+    if(s.billing_amount!=null){db.billing.push({activity_id:db.nextAct++,ps_id:p.device,PM_Activity:rn,Invoice_Type:"("+s.profile+")-$"+s.billing_amount,Customer:s.system,Job_Status:"Invoiced",Repair_Comments:pm.comments,Aps_Technician:pm.tech,Date_of_Service:date,Dispatch_Type:s.coxManager,Remedy_Ticket:pm.remedy});pm.billingFlag=true}
+    db.pms.push(pm); s.date_pm_comp=date;
+  };
+  Object.values(db.ps).forEach((p,i)=>{
+    if(p.device==="4PHX5-C"||p.Inactive) return;
+    mkPM(p,addDays(t,-(400+Math.floor(R2()*60))));
+    mkPM(p,addDays(t,-(320+Math.floor(R2()*25))));
+    if(p.device==="4PHX2-A"||p.device==="5PHX1-A"||i%9===4){mkPM(p,addDays(t,-(45+Math.floor(R2()*60))));db.sites[p.address].CurrentYearCompletionStatus="PM Completed"}
+  });
+  db.pms.sort((a,b)=>a.date.localeCompare(b.date)); let n=1204480; const remap={};
+  db.pms.forEach(pm=>{remap[pm.rn]=n;pm.rn=n++}); db.billing.forEach(b=>b.PM_Activity=remap[b.PM_Activity]); db.nextRn=n+20;
+  // One record waiting on supervisor review, to show the queue
+  const rv=db.pms.filter(x=>x.ps==="5PHX1-A").sort((a,b)=>b.date.localeCompare(a.date))[0];
+  if(rv){const at=rv.date+"T16:40:00";rv.tech="";rv.remedy="";rv.entryUser="Demo Data Entry";
+    rv.review={status:"pending",missing:["Remedy MNT ticket #","Tech"],reason:"Tech sheet not turned in yet. Remedy ticket pending from Cox NOC.",by:"Demo Data Entry",role:"Data entry",at};
+    db.activity.push({at,by:"Demo Data Entry",role:"Data entry",rn:rv.rn,ps:rv.ps,cat:"Review",action:"Submitted for supervisor review",detail:"Blank required fields: Remedy MNT ticket #, Tech",note:rv.review.reason});
+    const b=db.billing.find(x=>x.PM_Activity===rv.rn);if(b){b.Aps_Technician="";b.Remedy_Ticket="";b.Job_Status="Pending"}}
+  return db;
+}
+let DB;
+function load(){try{const r=localStorage.getItem(STORE);if(r){DB=JSON.parse(r);if(DB&&DB.ps){DB.activity=DB.activity||[];return}}}catch(e){}DB=buildDB();persist()}
+function persist(){try{localStorage.setItem(STORE,JSON.stringify(DB))}catch(e){}}
+
+/* ===== Lookups mirroring Access domain functions ===== */
+const qryMasterPS=dev=>{const p=DB.ps[dev];return p&&!p.Inactive&&DB.sites[p.address]?p:null}; // qry_master_power_supply_locations (Inactive = No)
+const siteOf=p=>DB.sites[p.address];
+const pmsFor=dev=>DB.pms.filter(r=>r.ps===dev);
+const maxRec=(dev,below)=>pmsFor(dev).filter(r=>below==null||r.rn<below).reduce((m,r)=>r.rn>(m?m.rn:-1)?r:m,null);
+const rfOwners=(rf,exceptDev)=>Object.values(DB.ps).filter(p=>p.rf_address&&p.rf_address.toUpperCase()===rf.toUpperCase()&&p.device!==exceptDev);
+const billingFor=rn=>DB.billing.find(b=>b.PM_Activity===rn);
+
+/* ===== UI helpers ===== */
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),3600)}
+function dialog(title,html,buttons,tone=""){
+  return new Promise(res=>{
+    const d=$("#dlg");$("#dlgBox").className="dlg "+tone;$("#dlgT").textContent=title;$("#dlgB").innerHTML=html;
+    const a=$("#dlgA");a.innerHTML="";let done=false;const fin=v=>{if(done)return;done=true;d.close();res(v)};
+    buttons.forEach(([label,val,cls])=>{const b=document.createElement("button");b.type="button";b.className="btn "+(cls||"");b.textContent=label;b.onclick=()=>{
+      if(typeof val==="function"){const r=val(d);if(r===false)return;fin(r)}else fin(val)};a.appendChild(b)});
+    d.oncancel=e=>{e.preventDefault();fin(buttons.length===1?buttons[0][1]:null)};
+    d.showModal();const p=a.querySelector(".primary")||a.lastChild;p&&p.focus();
+  });
+}
+const msg=(title,text,tone="critical")=>dialog(title,`<p>${text}</p>`,[["OK",true,"primary"]],tone);
+const yesNo=(title,text,tone="critical",yes="Yes",no="No")=>dialog(title,`<p>${text}</p>`,[[no,false],[yes,true,"primary"]],tone);
+const opts=(list,v,ph)=>(ph!=null?`<option value="">${esc(ph)}</option>`:"")+list.map(x=>`<option${x===v?" selected":""}>${esc(x)}</option>`).join("")+(v&&!list.includes(v)?`<option selected>${esc(v)}</option>`:"");
+
+/* ===== Session ===== */
+let area="Phoenix", user=USERS[0], F=null, baseline="";
+const blankF=()=>({rn:null,ps:null,date:"",tech:"",remedy:"",uno:"",start:"",end:"",vin:"",a1:"",a2:"",comments:"",repairs:"",flags:{},bats:[],
+  m:null,issueChk:false,lastVisit:null,lastRec:null,ts:null,entryUser:null,billingFlag:false});
+const snapF=()=>JSON.stringify({...F,issueChk:undefined});
+const isDirty=()=>F&&snapF()!==baseline;
+function masterOf(p){const s=siteOf(p);return{city:s.city,zip:s.zip,qs:s.q_s,access:s.PhysicalAccessibility,meter:s.utility_meter,cab:s.cab_type,apu:s.gen_type,
+  mfr:p.PS_Manufacturer,psType:p.module_type,sn:p.ps_sn,vout:p.Vac_Out,xpdr:p.device_type,rf:p.rf_address,alias:p.CoxDeviceAlias,
+  apPsid:p.PSCurrentYearUpdatedPS_Name,apAddr:p.PSCurrentYearUpdatedAddress,apAlias:p.PSCurrentYearUpdatedDeviceAlias}}
+const MFIELDS={city:["site","city"],zip:["site","zip"],qs:["site","q_s"],access:["site","PhysicalAccessibility"],meter:["site","utility_meter"],cab:["site","cab_type"],apu:["site","gen_type"],
+  mfr:["ps","PS_Manufacturer"],psType:["ps","module_type"],sn:["ps","ps_sn"],vout:["ps","Vac_Out"],xpdr:["ps","device_type"],rf:["ps","rf_address"],alias:["ps","CoxDeviceAlias"],
+  apPsid:["ps","PSCurrentYearUpdatedPS_Name"],apAddr:["ps","PSCurrentYearUpdatedAddress"],apAlias:["ps","PSCurrentYearUpdatedDeviceAlias"]};
+const MLABEL={city:"City",zip:"Zip code",qs:"QS map grid",access:"Physical accessibility",meter:"Meter number",cab:"PS cabinet type",apu:"APU model",mfr:"PS manufacturer",psType:"PS type",sn:"PS serial #",vout:"Output voltage",xpdr:"Transponder type",rf:"Transponder address (MAC)",alias:"Cox device alias",apPsid:"Appended APS PS ID",apAddr:"Appended address",apAlias:"Appended device alias"};
+
+/* ===== Static controls ===== */
+$("#area").innerHTML=opts(Object.keys(AREAS),area);
+$("#user").innerHTML=USERS.map(u=>`<option value="${u.id}">${esc(u.name)} (${esc(u.role)})</option>`).join("");
+$("#tech").innerHTML=opts(L.tech,"","");
+$("#comments").innerHTML=opts(L.comments,"","");
+$("#flags").innerHTML=FLAGS.map(([k,l])=>`<label class="flag-c"><input type="checkbox" data-flag="${k}"> ${esc(l)}</label>`).join("")+
+  `<label class="flag-c issue"><input type="checkbox" id="issueChk"> Update as an issue site?</label>`;
+
+/* ===== PS ID combo (row source: active PS in the selected service area, ordered by device) ===== */
+const psInput=$("#psInput"),psList=$("#psList");let active=-1,shown=[];
+const comboRows=()=>Object.values(DB.ps).filter(p=>!p.Inactive&&siteOf(p)&&siteOf(p).ServiceArea===area).sort((a,b)=>a.device.localeCompare(b.device));
+function renderList(){
+  const q=psInput.value.trim().toUpperCase();
+  shown=comboRows().filter(p=>!q||p.device.includes(q)||p.address.toUpperCase().includes(q));
+  psList.innerHTML=shown.length?shown.map((p,i)=>{const s=siteOf(p);return `<div class="opt" role="option" id="o${i}" data-i="${i}" aria-selected="${i===active}"><b>${esc(p.device)}</b><span>${esc(p.address)}</span>${ISSUE_OPEN.includes(s.IssueSite)?'<span class="flag">Issue site</span>':""}</div>`}).join("")
+    :`<div class="opt" aria-disabled="true"><span>No active PS ID in ${esc(area)} matches “${esc(psInput.value)}”. Press Enter to check it against the master list.</span></div>`;
+}
+const openList=()=>{renderList();psList.classList.add("open");psInput.setAttribute("aria-expanded","true")};
+const closeList=()=>{psList.classList.remove("open");psInput.setAttribute("aria-expanded","false");active=-1};
+psInput.addEventListener("focus",()=>{psInput.select();openList()});
+psInput.addEventListener("input",()=>{active=0;openList()});
+psInput.addEventListener("keydown",e=>{
+  if(e.key==="ArrowDown"){e.preventDefault();if(!psList.classList.contains("open"))openList();active=Math.min(active+1,shown.length-1);renderList();$("#o"+active)?.scrollIntoView({block:"nearest"})}
+  else if(e.key==="ArrowUp"){e.preventDefault();active=Math.max(active-1,0);renderList();$("#o"+active)?.scrollIntoView({block:"nearest"})}
+  else if(e.key==="Enter"){e.preventDefault();const v=psInput.value.trim().toUpperCase();const hit=shown[active>=0?active:0];
+    if(hit&&(!v||hit.device===v||shown.length===1||active>0))pickPS(hit.device);else if(v)pickPS(v)}
+  else if(e.key==="Escape"){closeList();psInput.value=F.ps||""}
+});
+psList.addEventListener("mousedown",e=>{const o=e.target.closest(".opt[data-i]");if(o){e.preventDefault();pickPS(shown[+o.dataset.i].device)}});
+psInput.addEventListener("blur",()=>setTimeout(()=>{if(!busy){closeList();psInput.value=F.ps||""}},150));
+let busy=false;
+
+/* ===== PM_PS_ID_AfterUpdate ===== */
+async function pickPS(dev){
+  closeList();
+  if(F.ps===dev){psInput.value=dev;psInput.blur();return}
+  if(F.rn!=null){ return changePSOnRecord(dev) }
+  if(isDirty()){ if(!(await discardOK())){psInput.value=F.ps||"";return} newPM(false) }
+  busy=true;psInput.blur();
+  try{
+    const p=qryMasterPS(dev);
+    if(!p||siteOf(p).ServiceArea!==area){await msg("Validation warning","There is no PS ID Number that matches Device in Master Power Supply Locations Query. Please review and fix.","warn");psInput.value="";return}
+    const s=siteOf(p);
+    if(s.pmQuota==null){await msg("Major error","This field cannot be empty [PM QUOTA]. This is a major error. Please contact the Database Administrator.");psInput.value="";return}
+    if(s.baQuota==null){await msg("Major error","This field cannot be empty [BA QUOTA]. This is a major error. Please contact the Database Administrator.");psInput.value="";return}
+    if(s.pmnq==null){await msg("Major error","This field cannot be empty [PM NO QUOTA]. This is a major error. Please contact the Database Administrator.");psInput.value="";return}
+    F.ps=dev;F.m=masterOf(p);psInput.value=dev;render();
+    // Issue site status
+    if(s.IssueSite==="Yes"){
+      const detail=`The issue category is [${esc(s.IssueCategory)}] and the issue type is [${esc(s.IssueType)}]. The issue notes are: [${esc(s.IssueSiteNotes)}].`;
+      if(s.CurrentYearCompletionStatus==="PM Completed"||s.CurrentYearCompletionStatus==="NO - PM Completed"){
+        const after=s.CurrentYearCompletionStatus==="PM Completed"?"AFTER a PM was already completed for the current year":"with NO PM completed for the current year";
+        const clear=await dialog("Clear issue site status?",`<p>This site is listed as an <b>issue site</b>. It was updated on [${esc(fmtD(s.IssueSiteDate))}] ${after}.</p><p>${detail}</p><p><b>Do you wish to clear the issue site status? Does this PM fix it?</b></p>`,[["No",false],["Yes, clear it",true,"primary"]],"warn");
+        if(clear) clearIssueOnPM(p,s);
+      } else {await msg("Completion status error",`This issue site does not have the correct indicator for completion status! Please contact ${ADMIN} immediately.`);render();return}
+    }
+    F.issueChk=ISSUE_OPEN.includes(siteOf(p).IssueSite);
+    // PM history checks
+    const hist=pmsFor(dev);
+    if(!hist.length){
+      await msg("First time PM for PS ID: "+dev,"This is the first PM ever for this PS ID in the database. There will be no last service date. If there is an issue contact the Database Administrator. Thank you.","");
+      stampEntry();render();focusFirst();return;
+    }
+    const last=maxRec(dev);
+    if(!last.date){await msg("Major error: no previous service date","There is no previous [Service Date] for this PS ID. This is a major error. Contact the Database Administrator immediately! There was likely a previous record entered and NOT completed!");newPM(false);return}
+    if(+last.date.slice(0,4)>thisYear()-1){
+      const go=await yesNo("Current year – already created! Possible major error!",`The last PM was done this current year on ${esc(fmtD(last.date))}. Creating another record can cause duplicate billing. This is a major issue. Do you wish to continue?`);
+      if(!go){newPM(false);return}
+    } else {
+      await msg("First record this year","This is the first PM record for this PS ID this current year.","ok");
+    }
+    F.lastVisit=last.date;F.lastRec=last.rn;stampEntry();render();focusFirst();
+  } finally {busy=false;updateState()}
+}
+async function changePSOnRecord(dev){
+  busy=true;psInput.blur();
+  try{
+    const p=qryMasterPS(dev);
+    if(!p||siteOf(p).ServiceArea!==area){await msg("Validation warning","There is no PS ID Number that matches Device in Master Power Supply Locations Query. Please review and fix.","warn");psInput.value=F.ps;return}
+    const s=siteOf(p);
+    if(s.pmQuota==null||s.baQuota==null||s.pmnq==null){await msg("Major error","A quota field is empty for this site [PM QUOTA, BA QUOTA or PM NO QUOTA]. This is a major error. Please contact the Database Administrator.");psInput.value=F.ps;return}
+    const b=billingFor(F.rn);
+    const ok=await yesNo("Change the PS ID on this record?",`Record ${F.rn} is entered under ${esc(F.ps)}. Moving it to ${esc(dev)} is a major change: you’ll be asked for a reason when you save${b?`, and billing record ${b.activity_id} moves with it`:""}.`,"warn","Change PS ID","Cancel");
+    if(!ok){psInput.value=F.ps;return}
+    const yr=pmsFor(dev).filter(r=>r.rn!==F.rn&&+r.date.slice(0,4)===thisYear());
+    if(yr.length&&!(await yesNo("Current year – already created! Possible major error!",`${esc(dev)} already has a PM this year (record ${yr[0].rn}, ${esc(fmtD(yr[0].date))}). Moving this record there can cause duplicate billing. Do you wish to continue?`))){psInput.value=F.ps;return}
+    const last=maxRec(dev);F.ps=dev;F.m=masterOf(p);F.lastVisit=last&&last.date;F.lastRec=last&&last.rn;F.issueChk=ISSUE_OPEN.includes(s.IssueSite);psInput.value=dev;render();
+  } finally {busy=false;updateState()}
+}
+function stampEntry(){if(!F.ts){F.ts=new Date().toISOString();F.entryUser=user.name}}
+function focusFirst(){$("#remedy").focus()}
+function clearIssueOnPM(p,s){
+  const now=new Date().toISOString();
+  logAct({ps:p.device,cat:"Issue site",action:"Issue site cleared on PM",detail:"Yes → Resolved",note:"Resolved and Cleared on PM Entry Form"});
+  DB.issueLog.push({at:now,psid:p.device,address:s.location,type:"Previous Yes to Resolved",prev:"Yes",next:"Resolved",ticket:F.remedy,category:s.IssueCategory,issueType:s.IssueType,impact:s.IssueDetails,notes:s.IssueSiteNotes,cleared:"Resolved and Cleared on PM Entry Form",by:user.name,byId:user.id,form:"PM Entry Form",dwo:s.Issue_DWO_Ticket,pmRec:F.rn});
+  logMaster(p.device,"Issue site","Yes","Resolved");
+  Object.assign(s,{IssueSite:"Resolved",IssueSiteDate:now,IssueSiteNotes:"Resolved on PM: - "+(s.IssueSiteNotes||""),PreviousIssueCleared:"Yes",IssueClearedDate:now,CurrentYearCompletionStatus:"PM Completed",IssueClearedNotes:"Resolved and Cleared on PM Entry Form"});
+  F.issueChk=false;persist();toast("Issue site cleared and logged.");
+}
+const dfmt=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||"")?fmtD(v):v;
+function logAct(o){DB.activity.push(Object.assign({at:new Date().toISOString(),by:user.name,role:user.role,rn:F&&F.rn,ps:F&&F.ps,cat:"Record",action:"",detail:"",note:""},o))}
+function logMaster(dev,field,from,to,note){from=dfmt(from);to=dfmt(to);DB.masterLog.push({at:new Date().toISOString(),ps:dev,field,from:from??"",to:to??"",by:user.name});logAct({ps:dev,cat:"Master record",action:field+" changed",detail:(from||"blank")+" → "+(to||"blank"),note:note||""})}
+
+/* ===== Rendering ===== */
+function render(){renderReview();renderPlate();renderMaster();renderVisit();renderBatts();renderAudit();updateState()}
+function renderPlate(){
+  $("#recNum").textContent=F.rn??"New";$("#lastVisit").textContent=F.lastVisit?fmtD(F.lastVisit):"–";
+  const el=$("#plateR");
+  if(!F.ps){el.innerHTML=`<div class="plate-empty">Choose a power supply in ${esc(area)} to start a PM. Site and equipment details load from the master record, and the form runs the same checks as the Access PM form.</div>`;return}
+  const p=DB.ps[F.ps],s=siteOf(p),chips=[];
+  const yr=pmsFor(F.ps).filter(r=>r.rn!==F.rn&&+r.date.slice(0,4)===thisYear());
+  chips.push(F.lastRec?`<span class="chip">Last record ${F.lastRec}</span>`:`<span class="chip">No earlier PM</span>`);
+  chips.push(yr.length?`<span class="chip warn">${yr.length} ${F.rn!=null?"other ":""}PM${yr.length>1?"s":""} this year</span>`:`<span class="chip ok">${F.rn!=null?"No other PM this year":"No PM yet this year"}</span>`);
+  if(s.IssueSite)chips.push(`<span class="chip ${s.IssueSite==="Resolved"?"ok":"warn"}">Issue site: ${esc(s.IssueSite)}</span>`);
+  chips.push(s.billing_amount==null?`<span class="chip bad">No billing profile</span>`:`<span class="chip info">Profile (${esc(s.profile)}) $${s.billing_amount}</span>`);
+  const b=F.rn!=null&&billingFor(F.rn);
+  if(b)chips.push(`<span class="chip ok">Billing record ${b.activity_id}, ${esc(b.Job_Status)}</span>`);
+  el.innerHTML=`<div><div class="plate-addr">${esc(p.address)}</div><div class="plate-sub">${esc(F.m.city)}, ${esc(F.m.zip)} &nbsp; ${esc(s.ServiceArea)} &nbsp; Cox manager: ${esc(s.coxManager)}</div></div><div class="chips">${chips.join("")}</div>`;
+}
+const lock=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>`;
+function renderMaster(){
+  const el=$("#master");
+  if(!F.ps){el.innerHTML=`<p class="note">Site, power supply and transponder details appear here after you choose a PS ID. You can correct them during the PM; changes update the master record when the PM is saved.</p>`;return}
+  const p=DB.ps[F.ps],s=siteOf(p),orig=masterOf(p);
+  const ro=(k,v)=>`<div class="mrow"><span class="k">${esc(k)}</span><div class="ro">${lock}${v==null||v===""?'<span class="muted">Not on file</span>':esc(v)}</div></div>`;
+  const inp=(k,extra="")=>`<div class="mrow${F.m[k]!==orig[k]?" changed":""}" id="mr-${k}"><label for="m-${k}">${esc(MLABEL[k])}</label><input id="m-${k}" data-m="${k}" value="${esc(F.m[k])}" ${extra}></div>`;
+  const sel=(k,list)=>`<div class="mrow${F.m[k]!==orig[k]?" changed":""}" id="mr-${k}"><label for="m-${k}">${esc(MLABEL[k])}</label><select id="m-${k}" data-m="${k}">${opts(list,F.m[k],"")}</select></div>`;
+  el.innerHTML=`<p class="note">Locked fields can only be changed by an administrator. Edited fields are outlined and update the master record when you save.</p>
+  <div class="grp">Site</div>${ro("Address",p.address)}${inp("city")}${inp("zip",'inputmode="numeric" maxlength="10"')}${ro("Profile",s.profile)}${inp("qs")}${sel("access",L.access)}${inp("meter")}
+  <div class="grp">Power supply</div>${sel("mfr",L.mfr)}${sel("psType",L.psType)}${inp("sn")}${ro("Number of modules",s.number_of_modules)}${sel("cab",L.cab)}${sel("apu",L.apu)}${inp("vout",'inputmode="decimal"')}
+  <div class="grp">Transponder</div>${sel("xpdr",L.xpdr)}${inp("rf",'class="mono" maxlength="20" spellcheck="false" autocapitalize="characters"')}${inp("alias")}
+  <div class="grp">Appended this year</div>${inp("apPsid")}${inp("apAddr")}${inp("apAlias")}
+  <div class="grp">Quotas and status</div>${ro("PM quota",s.pmQuota)}${ro("BA quota",s.baQuota)}${ro("PM no quota add",s.pmnq)}${ro("Issue site",s.IssueSite||"None")}${ro("Current year status",s.CurrentYearCompletionStatus)}${ro("Last PM completed",fmtD(s.date_pm_comp))}`;
+}
+function renderVisit(){
+  ["remedy","tech","date","uno","start","end","vin","a1","a2","comments","repairs"].forEach(k=>{$("#"+k).value=F[k]??""});
+  document.querySelectorAll("[data-flag]").forEach(c=>c.checked=!!F.flags[c.dataset.flag]);
+  $("#issueChk").checked=!!F.issueChk;
+  $("#entryUser").textContent=F.entryUser||"–";
+  document.querySelectorAll(".f.err").forEach(f=>{f.classList.remove("err");f.querySelector(".msg").textContent=""});
+}
+function renderBatts(){
+  const tb=$("#battBody");$("#battCount").textContent=F.bats.length+" row"+(F.bats.length===1?"":"s");
+  if(!F.bats.length){tb.innerHTML=`<tr><td colspan="6" class="batt-empty">No batteries on this PM. Add one row per battery tested.</td></tr>`;return}
+  tb.innerHTML=F.bats.map((b,i)=>`<tr><td class="n">${i+1}</td>
+    <td><select data-b="${i}" data-k="tray" aria-label="Battery ${i+1} ID">${opts(L.trays,b.tray,"")}</select></td>
+    <td><select data-b="${i}" data-k="make" aria-label="Battery ${i+1} manufacture"><option value=""></option>${L.bat.map(x=>`<option value="${x.id}"${String(x.id)===String(b.make)?" selected":""}>${esc(x.make)}</option>`).join("")}</select></td>
+    <td><input data-b="${i}" data-k="code" value="${esc(b.code)}" maxlength="8" aria-label="Battery ${i+1} date code"></td>
+    <td><select data-b="${i}" data-k="status" aria-label="Battery ${i+1} status">${opts(L.batStatus,b.status,"")}</select></td>
+    <td class="x"><button type="button" class="icon-btn" data-del="${i}" aria-label="Remove battery ${i+1}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></td></tr>`).join("");
+}
+function renderReview(){
+  const el=$("#reviewBar"),r=F.rn!=null&&DB.pms.find(x=>x.rn===F.rn);
+  const n=DB.pms.filter(x=>x.review&&x.review.status==="pending").length;
+  const rb=$("#btnReview");rb.hidden=user.tier<2;rb.textContent=`Review queue (${n})`;rb.classList.toggle("alert",n>0);
+  if(!r||(!r.review&&!r.override)){el.hidden=true;return}
+  el.hidden=false;
+  if(r.review&&r.review.status==="pending"){
+    const still=REQUIRED.filter(k=>blank(r[k])).map(k=>VLABEL[k]);
+    el.className="review pending";
+    el.innerHTML=`<div><b>Waiting on supervisor review.</b> Submitted by ${esc(r.review.by)} on ${esc(fmtTS(r.review.at))} with blank: ${esc(r.review.missing.join(", "))}.<br><span class="muted">Reason: “${esc(r.review.reason)}”</span>${still.length?`<br>Still blank: ${esc(still.join(", "))}.`:"<br>All required fields are now filled in."}</div>${user.tier>=2?`<button class="btn primary" type="button" id="btnSignOff">Sign off review</button>`:`<span class="muted">A supervisor will sign this off.</span>`}`;
+    const b=$("#btnSignOff");if(b)b.onclick=signOff;
+  } else if(r.review){
+    el.className="review done";
+    el.innerHTML=`<div><b>Reviewed by ${esc(r.review.reviewedBy)}</b> on ${esc(fmtTS(r.review.reviewedAt))}. “${esc(r.review.reviewNote)}”${r.review.acceptedBlank&&r.review.acceptedBlank.length?` Accepted with blank: ${esc(r.review.acceptedBlank.join(", "))}.`:""}</div>`;
+  } else {
+    el.className="review done";
+    el.innerHTML=`<div><b>Saved by administrator override</b> (${esc(r.override.by)}, ${esc(fmtTS(r.override.at))}) with blank: ${esc(r.override.missing.join(", "))}. “${esc(r.override.reason)}”</div>`;
+  }
+}
+function renderAudit(){
+  const ap=$("#auditPanel");const r=F.rn!=null&&DB.pms.find(x=>x.rn===F.rn);
+  if(!r){ap.hidden=true;return} ap.hidden=false;
+  const acts=DB.activity.filter(a=>a.rn===r.rn).slice().reverse();
+  $("#audit").innerHTML=acts.length?acts.map(a=>`<li><b>${esc(a.action)}</b>${a.detail?`: ${esc(a.detail)}`:""}${a.note?`<br><span class="note-q">Note: “${esc(a.note)}”</span>`:""}<br>${esc(a.by)} (${esc(a.role||"")}), ${esc(fmtTS(a.at))}</li>`).join("")
+    :`<li>Imported from history on ${esc(fmtD(r.date))}. No changes logged since.</li>`;
+}
+function updateState(){
+  const st=$("#state");let dot="dot",txt;
+  if(!F.ps&&F.rn==null)txt="Pick a PS ID to start a PM";
+  else if(isDirty()){dot+=" dirty";txt=F.rn!=null?"Unsaved changes to record "+F.rn:"New PM for "+F.ps+", not saved yet"}
+  else if(F.rn!=null){dot+=" saved";const la=DB.activity.filter(x=>x.rn===F.rn).pop();txt="Record "+F.rn+(la?" last saved "+fmtTS(la.at):" saved")}
+  else txt="New PM for "+F.ps;
+  st.innerHTML=`<span class="${dot}"></span><span>${esc(txt)}</span>`;
+  $("#btnUndo").disabled=!isDirty();$("#btnDelete").disabled=F.rn==null;$("#btnDelete").title=user.tier<2?"Supervisor or administrator only":"";$("#btnSave").textContent=F.rn!=null?"Save changes":"Save PM";
+}
+
+/* ===== Field events ===== */
+const VISIT=["remedy","tech","date","uno","start","end","vin","a1","a2","comments","repairs"];
+VISIT.forEach(k=>$("#"+k).addEventListener("input",e=>{F[k]=e.target.value;updateState()}));
+document.querySelectorAll("[data-flag]").forEach(c=>c.addEventListener("change",()=>{F.flags[c.dataset.flag]=c.checked;updateState()}));
+$("#master").addEventListener("input",e=>{const k=e.target.dataset.m;if(!k)return;F.m[k]=e.target.value;const p=DB.ps[F.ps];$("#mr-"+k).classList.toggle("changed",F.m[k]!==masterOf(p)[k]);updateState()});
+$("#master").addEventListener("change",e=>{const k=e.target.dataset.m;if(k)F.m[k]=e.target.value;if(k==="rf")rfAfterUpdate();if(k==="city"||k==="zip")renderPlate()});
+async function clearAndFocus(id,setter){setter();const el=$("#"+id);el.value="";updateState();el.focus()}
+
+// PM_Remedy_Num_AfterUpdate
+$("#remedy").addEventListener("change",async()=>{
+  const v=F.remedy.trim();if(v==="")return;
+  if(!/^\d+$/.test(v)){await msg("Remedy # non-numeric!","The Remedy number you entered has a non-numeric character. This is not allowed. Please review and fix.");return clearAndFocus("remedy",()=>F.remedy="")}
+  if(v.length!==8){await msg("Remedy # not correct amount of digits!","The Remedy number must be 8 digits long. Please review and fix.");return clearAndFocus("remedy",()=>F.remedy="")}
+});
+// PM_ServiceDate_AfterUpdate
+$("#date").addEventListener("change",async()=>{
+  const v=F.date;
+  if(!v){await msg("Service date","Your [Service Date] is empty!","warn");$("#date").focus();return}
+  if(v<"2019-01-01"){await msg("Service date","You have selected a date from 2018 or earlier. Please review and fix.");return clearAndFocus("date",()=>F.date="")}
+  if(v>iso()){await msg("Service date","You have selected a date from the future. This is not allowed. Please review and fix.");return clearAndFocus("date",()=>F.date="")}
+  const days=Math.round((new Date(iso()+"T12:00:00")-new Date(v+"T12:00:00"))/864e5);
+  if(days>12&&!(await yesNo("Date past 12 days – continue?",`You have entered a [Service Date] that is ${days} days past today’s date. This is a possible error. Do you wish to continue?`)))return clearAndFocus("date",()=>F.date="");
+});
+// Master_RF_Address_AfterUpdate
+async function rfAfterUpdate(){
+  const v=(F.m.rf||"").trim();if(!v)return true;
+  if(v.length!==12){await msg("MAC not correct number of characters!","The MAC (RF Address) must be 12 characters long. Please review and fix.");F.m.rf="";renderMaster();$("#m-rf").focus();updateState();return false}
+  const dup=rfOwners(v,F.ps);
+  if(dup.length){await msg("MAC already exists!",`The MAC (RF Address) already exists under ID ${esc(dup[0].device)}. Please try again with a different entry, or keep it clear and contact ${ADMIN} immediately.`);F.m.rf="";renderMaster();$("#m-rf").focus();updateState();return false}
+  return true;
+}
+// chk_update_issue_site_ro_AfterUpdate
+$("#issueChk").addEventListener("change",async e=>{
+  if(!e.target.checked){F.issueChk=false;return}
+  e.target.checked=false;
+  if(!F.ps){await msg("Check your work!","The PS ID is empty. You cannot update the site as an issue site without a PS ID.");return}
+  const p=DB.ps[F.ps],s=siteOf(p);
+  if(s.pmQuota==null||s.baQuota==null||s.pmnq==null){await msg("Major error","A site quota field is empty. This is a major error. Please contact the Database Administrator.");return}
+  if(+s.pmQuota===0&&+s.baQuota===0&&+s.pmnq===0){
+    const cancel=await yesNo("All quotas are zero – exit and close form?","All quotas for PM (Gen), PM (BA), and PM No Quota (PMNQ) are showing as zero (0). This site most likely does NOT need to be updated! Only continue if you are sure of the exact purpose for updating a site that has no quota listed. Do you wish to cancel this?","warn","Yes, cancel","No, continue");
+    if(cancel)return;
+    await msg("Take caution!",`You have chosen to continue. Please be aware of what you are updating and update accordingly. Escalate any issues to ${ADMIN} immediately!`,"warn");
+  }
+  if(!(await yesNo("Continue?","You are about to update this as an [ISSUE SITE – Completed With Issue] and open the Issue Sites Update form (CWIS). Do you wish to continue?","warn")))return;
+  let already=null;
+  if(ISSUE_OPEN.includes(s.IssueSite)){
+    const label={"Yes":"[NOT COMPLETED]","Completed With Issue":"[COMPLETED WITH ISSUE – PM]","Completed With Issue-RO":"[COMPLETED WITH ISSUE – RO]"}[s.IssueSite];
+    if(!(await yesNo("Already an issue site – do you wish to continue?",`This site is already listed as an [Issue Site] – ${label}!`,"warn")))return;
+    already=s.IssueSite;
+  }
+  const ok=await cwisForm(p,s,already==="Completed With Issue-RO"?"Completed With Issue-RO":"Completed With Issue");
+  F.issueChk=ok||ISSUE_OPEN.includes(s.IssueSite);$("#issueChk").checked=F.issueChk;render();
+});
+function cwisForm(p,s,status){
+  const cat=s.IssueCategory&&L.isCategory[s.IssueCategory]?s.IssueCategory:"";
+  const html=`<p>Site ${esc(s.location)} for PS ${esc(p.device)}.</p><div class="fields">
+   <div class="f"><label for="cw-st">Issue site status</label><select id="cw-st">${opts(["Completed With Issue","Completed With Issue-RO"],status)}</select></div>
+   <div class="f"><label for="cw-cat">Issue category</label><select id="cw-cat">${opts(Object.keys(L.isCategory),cat,"")}</select></div>
+   <div class="f"><label for="cw-type">Issue type</label><select id="cw-type">${opts(cat?L.isCategory[cat]:[],s.IssueType,"")}</select></div>
+   <div class="f"><label for="cw-imp">Issue impact</label><select id="cw-imp">${opts(L.isImpact,s.IssueDetails,"")}</select></div>
+   <div class="f"><label for="cw-dwo">DWO ticket</label><input id="cw-dwo" value="${esc(s.Issue_DWO_Ticket||"")}"></div>
+   <div class="f"><label for="cw-tech">Associated tech</label><select id="cw-tech">${opts(L.tech,F.tech,"")}</select></div>
+   <div class="f full"><label for="cw-notes">Issue site notes</label><textarea id="cw-notes">${esc(s.IssueSite&&s.IssueSite!=="Resolved"?s.IssueSiteNotes||"":"")}</textarea><div class="msg" id="cw-msg"></div></div></div>`;
+  const pr=dialog("Issue sites update (CWIS)",html,[["Cancel",false],["Save issue site",d=>{
+      const g=id=>d.querySelector("#"+id).value.trim();
+      if(!g("cw-cat")||!g("cw-type")||!g("cw-notes")){d.querySelector("#cw-msg").textContent="Category, type and notes are required.";return false}
+      const now=new Date().toISOString(),prev=s.IssueSite||"";
+      DB.issueLog.push({at:now,psid:p.device,address:s.location,type:"Issue Site Update from PM Entry Form",prev:prev||"None",next:g("cw-st"),ticket:F.remedy,category:g("cw-cat"),issueType:g("cw-type"),impact:g("cw-imp"),notes:g("cw-notes"),cleared:"",by:user.name,byId:user.id,form:"PM Entry Form",dwo:g("cw-dwo"),pmRec:F.rn});
+      logMaster(p.device,"Issue site",prev||"None",g("cw-st"),g("cw-notes"));
+      Object.assign(s,{IssueSite:g("cw-st"),IssueSiteDate:now,IssueCategory:g("cw-cat"),IssueType:g("cw-type"),IssueDetails:g("cw-imp"),IssueSiteNotes:g("cw-notes"),Issue_DWO_Ticket:g("cw-dwo"),AssociatedTech:g("cw-tech")});
+      persist();toast("Issue site updated and logged.");return true;},"primary"]],"warn");
+  const c=$("#cw-cat");c.addEventListener("change",()=>{$("#cw-type").innerHTML=opts(L.isCategory[c.value]||[],"","")});
+  return pr;
+}
+
+/* ===== Batteries ===== */
+$("#battBody").addEventListener("input",e=>{const t=e.target;if(t.dataset.b!=null){F.bats[+t.dataset.b][t.dataset.k]=t.value;updateState()}});
+$("#battBody").addEventListener("change",e=>{const t=e.target;if(t.dataset.b!=null){F.bats[+t.dataset.b][t.dataset.k]=t.value;updateState()}});
+$("#battBody").addEventListener("click",e=>{const b=e.target.closest("[data-del]");if(b){F.bats.splice(+b.dataset.del,1);renderBatts();updateState()}});
+const nextTray=()=>{const u=new Set(F.bats.map(b=>b.tray));return L.trays.slice(13).find(t=>!u.has(t))||""};
+$("#addBatt").onclick=()=>{F.bats.push({tray:nextTray(),make:"",code:"",status:""});renderBatts();updateState()};
+$("#addString").onclick=()=>{const l=F.bats[F.bats.length-1]||{};for(let i=0;i<3;i++)F.bats.push({tray:nextTray(),make:l.make||"",code:l.code||"",status:""});renderBatts();updateState()};
+
+/* ===== Form_BeforeUpdate (save) ===== */
+function noteDialog(title,html,label,okLabel,cancelLabel,tone="warn"){
+  return dialog(title,html+`<div class="f full" style="margin-top:10px"><label for="dlg-note">${esc(label)} <span class="req">*</span></label><textarea id="dlg-note" rows="3"></textarea><div class="msg" id="dlg-note-msg"></div></div>`,
+    [[cancelLabel,null],[okLabel,d=>{const v=d.querySelector("#dlg-note").value.trim();if(v.length<5){d.querySelector("#dlg-note-msg").textContent="Write a short note (at least 5 characters) so the reviewer knows why.";d.querySelector("#dlg-note").focus();return false}return v},"primary"]],tone)
+    .then(v=>(typeof v==="string"?v:null));
+}
+const blank=v=>String(v??"").trim()==="";
+function markMissing(keys){document.querySelectorAll(".f.err").forEach(f=>{f.classList.remove("err");f.querySelector(".msg").textContent=""});
+  keys.forEach(k=>{const f=$("#"+k).closest(".f");f.classList.add("err");f.querySelector(".msg").textContent="Required"})}
+function softWarnings(){
+  const w=[];
+  const emptyOpt=OPTIONAL.filter(k=>blank(F[k])).map(k=>VLABEL[k]);
+  const emptyM=["rf","meter","sn"].filter(k=>blank(F.m[k])).map(k=>MLABEL[k]);
+  if(emptyOpt.length||emptyM.length)w.push("These fields are blank: "+[...emptyOpt,...emptyM].join(", ")+".");
+  const num=(k,lo,hi,u)=>{if(blank(F[k]))return;const n=Number(F[k]);if(!isFinite(n))w.push(`${VLABEL[k]} “${F[k]}” isn’t a number.`);else if(n<lo||n>hi)w.push(`${VLABEL[k]} is ${n} ${u}. Typical readings are ${lo} to ${hi} ${u}.`)};
+  num("vin",100,140,"V");num("a1",0,30,"A");num("a2",0,30,"A");
+  if(!blank(F.m.vout)){const n=Number(F.m.vout);if(!isFinite(n)||n<40||n>100)w.push(`Output voltage is ${F.m.vout}. Typical readings are 40 to 100 V.`)}
+  if(F.start&&F.end&&F.end<=F.start)w.push("Departure time is not after onsite time.");
+  if(!F.bats.length)w.push(F.flags.ba?"Battery analysis is checked, but no batteries are listed.":"No batteries are listed on this PM.");
+  const inc=F.bats.filter(b=>!b.tray||!b.make||!b.code||!b.status).length;if(inc)w.push(`${inc} battery row${inc>1?"s are":" is"} missing a Batt ID, manufacture, date code or status.`);
+  const ids=F.bats.map(b=>b.tray).filter(Boolean),dups=[...new Set(ids.filter((x,i)=>ids.indexOf(x)!==i))];if(dups.length)w.push("Batt ID used more than once: "+dups.join(", ")+".");
+  if(F.comments==="2-Battery Failure"&&!F.bats.some(b=>["RED","DWO"].includes(b.status)))w.push("Comments say Battery Failure, but no battery is marked RED or DWO.");
+  if(F.flags.hpBatt&&!F.bats.length)w.push("HP battery failure is checked, but no batteries are listed.");
+  return w;
+}
+const fieldsOf=()=>({ps:F.ps,date:F.date,tech:F.tech,remedy:F.remedy,uno:F.uno,start:F.start,end:F.end,vin:F.vin,a1:F.a1,a2:F.a2,comments:F.comments,repairs:F.repairs,flags:{...F.flags},bats:F.bats.map(b=>({...b}))});
+const show=(k,v)=>k==="date"?fmtD(v):v;
+function diffRecord(rec,origM){
+  const out=[],f=fieldsOf();
+  for(const k of Object.keys(VLABEL)){const a=rec?rec[k]??"":"",b=f[k]??"";if(rec&&a!==b)out.push({key:k,label:VLABEL[k],from:show(k,a),to:show(k,b),major:MAJOR.has(k)})}
+  if(rec)for(const [k,l] of FLAGS){const a=!!(rec.flags||{})[k],b=!!f.flags[k];if(a!==b)out.push({key:"flag:"+k,label:l,from:a?"Checked":"Unchecked",to:b?"Checked":"Unchecked",major:MAJOR.has("flag:"+k)})}
+  if(rec&&JSON.stringify(rec.bats)!==JSON.stringify(f.bats))out.push({key:"bats",label:"Batteries",from:rec.bats.length+" rows",to:f.bats.length+" rows (edited)",major:true});
+  for(const k of Object.keys(MFIELDS)){if((F.m[k]??"")!==(origM[k]??""))out.push({key:"m:"+k,label:MLABEL[k]+" (master)",from:origM[k]||"blank",to:F.m[k]||"blank",major:MAJOR.has("m:"+k),master:k})}
+  return out;
+}
+async function save(){
+  if(!F.ps){await msg("No PS ID","Choose a PS ID before saving. A PM record can’t be saved without one, at any access level.","warn");psInput.focus();return}
+  const p=DB.ps[F.ps],s=siteOf(p),v=(F.m.rf||"").trim();
+  // Access checks first (Form_BeforeUpdate)
+  if(v){
+    if(v.length!==12){await msg("MAC not correct number of characters!","The MAC (RF Address) must be 12 characters long. Please review and fix.");$("#m-rf").focus();return}
+    const dup=rfOwners(v,F.ps);
+    if(dup.length){await msg("MAC already exists!",`The MAC (RF Address) already exists under ID ${esc(dup[0].device)}. Please try again with a different entry, or keep it clear and contact ${ADMIN} immediately.`);F.m.rf="";renderMaster();$("#m-rf").focus();updateState();return}
+  }
+  if(s.billing_amount==null){await msg("No billing profile!","There is no billing profile for this site. There will be no billing record created or updated. Notify administration personnel that the master profile needs to be updated and a billing record needs to be created. If there is still an issue contact the Database Administrator. Thank you.");return}
+  // 1. Required fields: stop, unless supervisor review or administrator override
+  const missingKeys=REQUIRED.filter(k=>blank(F[k])),missing=missingKeys.map(k=>VLABEL[k]);
+  markMissing(missingKeys);
+  let gate=null;
+  if(missing.length){
+    const list=`<ul>${missing.map(m=>`<li>${esc(m)}</li>`).join("")}</ul>`;
+    if(user.tier>=3){
+      const note=await noteDialog("Required fields are blank",`<p>Fill in these fields before saving:</p>${list}<p>As an administrator you can save without them. Your reason is kept in the activity log.</p>`,"Reason for leaving them blank","Save with override","Go back and fill in");
+      if(note==null){$("#"+missingKeys[0]).focus();return} gate={type:"override",missing,reason:note};
+    } else {
+      const note=await noteDialog("Required fields are blank",`<p>Fill in these fields before saving:</p>${list}<p>If you can’t get this information now, submit the PM for supervisor review. A supervisor is notified and has to sign off on the record.</p>`,"Why can’t these be filled in now?","Submit for supervisor review","Go back and fill in");
+      if(note==null){$("#"+missingKeys[0]).focus();return} gate={type:"review",missing,reason:note};
+    }
+  }
+  // 2. Blank optional fields and unusual readings: warn
+  const warns=softWarnings();
+  if(warns.length&&!(await dialog("Check before saving",`<ul>${warns.map(w=>`<li>${esc(w)}</li>`).join("")}</ul>`,[["Go back",false],["Save anyway",true,"primary"]],"warn")))return;
+  // 3. Major changes to an existing record need a note
+  const rec0=F.rn!=null?DB.pms.find(x=>x.rn===F.rn):null, origM=masterOf(p);
+  const changes=diffRecord(rec0,origM), major=changes.filter(c=>c.major&&(rec0||c.master));
+  let changeNote="";
+  if(rec0&&major.length){
+    const b=billingFor(rec0.rn);
+    const n=await noteDialog("Reason for change required",`<p>Record ${rec0.rn} was already entered. These are major changes:</p><ul>${major.map(c=>`<li>${esc(c.label)}: ${esc(c.from||"blank")} → ${esc(c.to||"blank")}</li>`).join("")}</ul>${b?`<p>Billing record ${b.activity_id} (${esc(b.Job_Status)}) will be updated to match.</p>`:""}`,"Reason for change","Save changes","Go back");
+    if(n==null)return; changeNote=n;
+  } else if(!rec0&&major.length){
+    const n=await noteDialog("Master record changes",`<p>This PM also changes the master record:</p><ul>${major.map(c=>`<li>${esc(c.label)}: ${esc(c.from)} → ${esc(c.to)}</li>`).join("")}</ul>`,"Reason for the master change","Continue","Go back");
+    if(n==null)return; changeNote=n;
+  }
+  // 4. Billing (Access prompt)
+  const amt=s.billing_amount,inv="("+s.profile+")-$"+amt;
+  let billingAction=null;
+  if(F.billingFlag){
+    await msg("Updating the billing record",`You are updating the billing record for record number [${F.rn}] with a bill amount of [$${amt}].`,"warn");billingAction="update";
+  } else {
+    const r=await dialog("Billing",`<p>Do you want to create a billing record now?</p><p class="src">Invoice type ${esc(inv)}, job status Pending, customer ${esc(s.system)}.</p>`,[["Cancel and undo record","cancel","danger"],["No",false],["Yes, create billing","yes","primary"]],"");
+    if(r===null)return;
+    if(r==="cancel"){if(F.rn!=null)logAct({action:"Save cancelled at billing prompt; edits undone"});persist();undoRecord(true);toast("Record undone. Nothing was saved.");return}
+    if(r==="yes")billingAction="insert";
+  }
+  // Commit
+  const now=new Date().toISOString();
+  stampEntry();
+  let rec;
+  if(!rec0){
+    rec={rn:DB.nextRn++,...fieldsOf(),snap:null,last_maint_visit:F.lastVisit,ts:F.ts,entryUser:F.entryUser,billingFlag:false,audit:[]};
+    DB.pms.push(rec);F.rn=rec.rn;
+    logAct({rn:rec.rn,ps:rec.ps,action:"PM record created",detail:`Service date ${fmtD(rec.date)||"blank"}, tech ${rec.tech||"blank"}, Remedy ${rec.remedy||"blank"}, ${rec.bats.length} batteries`});
+  } else {
+    rec=rec0;
+    changes.filter(c=>!c.master).forEach(c=>logAct({rn:rec.rn,ps:F.ps,cat:c.major?"Major change":"Change",action:c.label+" changed",detail:(c.from||"blank")+" → "+(c.to||"blank"),note:c.major?changeNote:""}));
+    if(!changes.length)logAct({rn:rec.rn,action:"Saved with no changes"});
+    Object.assign(rec,fieldsOf());
+  }
+  // Master write-through
+  changes.filter(c=>c.master).forEach(c=>{const [t,col]=MFIELDS[c.master];(t==="site"?s:p)[col]=F.m[c.master];logMaster(p.device,MLABEL[c.master],origM[c.master],F.m[c.master],c.major?changeNote:"")});
+  rec.snap={PM_Address:p.address,PM_PS_Type:p.module_type,PM_Cab_Type:s.cab_type,PM_UtilityMeter:s.utility_meter,PM_RF_Address:p.rf_address,PM_City:s.city};
+  // Review / override bookkeeping
+  if(gate&&gate.type==="review"){rec.review={status:"pending",missing:gate.missing,reason:gate.reason,by:user.name,role:user.role,at:now};logAct({rn:rec.rn,ps:rec.ps,cat:"Review",action:"Submitted for supervisor review",detail:"Blank required fields: "+gate.missing.join(", "),note:gate.reason})}
+  else if(gate){rec.override={missing:gate.missing,reason:gate.reason,by:user.name,at:now};logAct({rn:rec.rn,ps:rec.ps,cat:"Override",action:"Administrator override: saved with blank required fields",detail:gate.missing.join(", "),note:gate.reason})}
+  else if(rec.review&&rec.review.status==="pending"&&!rec.review.complete){rec.review.complete=now;logAct({rn:rec.rn,ps:rec.ps,cat:"Review",action:"Required fields completed; awaiting supervisor sign-off"})}
+  // Billing
+  const bFields={ps_id:F.ps,Repair_Comments:F.comments,Aps_Technician:F.tech,Date_of_Service:F.date,Remedy_Ticket:F.remedy,Invoice_Type:inv};
+  if(billingAction==="insert"){
+    const act=DB.nextAct++;
+    DB.billing.push({activity_id:act,PM_Activity:rec.rn,Customer:s.system,Job_Status:"Pending",Dispatch_Type:s.coxManager,...bFields});
+    rec.billingFlag=F.billingFlag=true;
+    logAct({rn:rec.rn,ps:F.ps,cat:"Billing",action:`Billing record ${act} created`,detail:`${inv}, Pending`});
+  } else if(billingAction==="update"){
+    const b=billingFor(rec.rn);
+    if(b){const bl={ps_id:"PS ID",Repair_Comments:"Comments",Aps_Technician:"Tech",Date_of_Service:"Service date",Remedy_Ticket:"Remedy ticket",Invoice_Type:"Invoice type"};
+      for(const k of Object.keys(bFields)){if((b[k]??"")!==(bFields[k]??""))logAct({rn:rec.rn,ps:F.ps,cat:"Billing",action:`Billing record ${b.activity_id}: ${bl[k]} changed`,detail:(show(k==="Date_of_Service"?"date":k,b[k])||"blank")+" → "+(show(k==="Date_of_Service"?"date":k,bFields[k])||"blank"),note:changeNote})}
+      Object.assign(b,bFields)}
+  }
+  if(billingAction&&F.date){if(s.date_pm_comp!==F.date)logMaster(p.device,"Last PM completed",s.date_pm_comp,F.date);s.date_pm_comp=F.date}
+  persist();F.m=masterOf(p);baseline=snapF();render();
+  toast(gate&&gate.type==="review"?`Record ${rec.rn} saved and sent to a supervisor for review.`:billingAction==="insert"?`Record ${rec.rn} saved. Billing record created as Pending.`:billingAction==="update"?`Record ${rec.rn} saved. Billing record updated.`:`Record ${rec.rn} saved without a billing record.`);
+}
+
+/* ===== Open / new / undo / delete ===== */
+async function discardOK(){return await dialog("Discard unsaved changes?","<p>Your changes to this PM haven’t been saved.</p>",[["Keep editing",false],["Discard changes",true,"solid-danger"]],"warn")}
+function loadRec(r){const p=DB.ps[r.ps],s=siteOf(p),prev=maxRec(r.ps,r.rn);
+  F={...blankF(),rn:r.rn,ps:r.ps,date:r.date,tech:r.tech,remedy:r.remedy,uno:r.uno,start:r.start,end:r.end,vin:r.vin,a1:r.a1,a2:r.a2,comments:r.comments,repairs:r.repairs,
+    flags:{...r.flags},bats:r.bats.map(b=>({...b})),m:masterOf(p),issueChk:ISSUE_OPEN.includes(s.IssueSite),lastVisit:r.last_maint_visit||(prev&&prev.date),lastRec:prev&&prev.rn,ts:r.ts,entryUser:r.entryUser,billingFlag:!!billingFor(r.rn)};
+  baseline=snapF();psInput.value=r.ps;render()}
+async function openRecord(rn){
+  const r=DB.pms.find(x=>x.rn===rn);if(!r)return;
+  if(isDirty()&&!(await discardOK()))return;
+  const p=DB.ps[r.ps];
+  if(p&&p.rf_address&&rfOwners(p.rf_address,null).length>1){
+    await msg("Record access blocked",`This record contains a duplicate RF Address (already exists under ID: ${esc(rfOwners(p.rf_address,r.ps)[0].device)}). You must first contact ${ADMIN} to clear the duplicate. Only then can you proceed.`);return;
+  }
+  if(!p||!qryMasterPS(r.ps)){await msg("Validation warning","There is no PS ID Number that matches Device in Master Power Supply Locations Query. Please review and fix.","warn");return}
+  const s=siteOf(p);if(s.ServiceArea!==area){area=s.ServiceArea;$("#area").value=area}
+  loadRec(r);closeDrawer();window.scrollTo({top:0,behavior:"smooth"});
+}
+function newPM(){F=blankF();baseline=snapF();psInput.value="";render()}
+function undoRecord(){if(F.rn!=null)loadRec(DB.pms.find(x=>x.rn===F.rn));else newPM()}
+$("#btnSave").onclick=save;
+$("#btnNew").onclick=async()=>{if(isDirty()&&!(await discardOK()))return;newPM();psInput.focus()};
+$("#btnUndo").onclick=async()=>{if(!(await yesNo("Undo record?",F.rn!=null?`Record ${F.rn} goes back to how it was last saved.`:"This clears everything entered on this new PM.","warn","Undo record","Keep editing")))return;
+  if(F.rn!=null){logAct({action:"Unsaved edits undone"});persist()} undoRecord();toast("Record undone.")};
+$("#btnDelete").onclick=async()=>{
+  if(F.rn==null)return;
+  if(user.tier<2){await msg("Supervisor access needed","Only a supervisor or administrator can delete a PM record. Ask a supervisor, or add a note in Repairs explaining what’s wrong.","warn");return}
+  const rn=F.rn,r=DB.pms.find(x=>x.rn===rn),b=billingFor(rn);
+  const note=await noteDialog(`Delete record ${rn}?`,`<p>This deletes the PM for ${esc(r.ps)} on ${esc(fmtD(r.date))} and its ${r.bats.length} battery rows.${b?` Billing record ${b.activity_id} (${esc(b.Job_Status)}) is linked to it and is kept for administration to review.`:""}</p>`,"Reason for deleting","Delete record","Cancel","critical");
+  if(note==null)return;
+  logAct({rn,ps:r.ps,cat:"Major change",action:"PM record deleted",detail:`Service date ${fmtD(r.date)}, tech ${r.tech||"blank"}, Remedy ${r.remedy||"blank"}${b?`, billing ${b.activity_id} left in place`:""}`,note});
+  DB.pms=DB.pms.filter(x=>x.rn!==rn);persist();newPM();toast(`Record ${rn} deleted and logged.`);
+};
+$("#btnPrint").onclick=()=>window.print();
+$("#area").onchange=async e=>{if(isDirty()&&!(await discardOK())){e.target.value=area;return}area=e.target.value;newPM()};
+$("#user").onchange=e=>{user=USERS.find(u=>String(u.id)===e.target.value);render();toast("Signed in as "+user.name+" ("+user.role+").")};
+window.addEventListener("beforeunload",e=>{if(isDirty()){e.preventDefault();e.returnValue=""}});
+$("#btnReview").onclick=()=>{tab="review";openDrawer()};
+async function signOff(){
+  const r=DB.pms.find(x=>x.rn===F.rn);if(!r||!r.review||r.review.status!=="pending")return;
+  if(user.tier<2){await msg("Supervisor access needed","Only a supervisor or administrator can sign off a review.","warn");return}
+  if(isDirty()){await msg("Save first","Save or undo your edits before signing off this review.","warn");return}
+  const still=REQUIRED.filter(k=>blank(r[k])).map(k=>VLABEL[k]);
+  const note=await noteDialog("Supervisor sign-off",`<p>Record ${r.rn} was submitted by ${esc(r.review.by)} on ${esc(fmtTS(r.review.at))}.</p><p>Reason given: “${esc(r.review.reason)}”</p>${still.length?`<p><b>Still blank:</b> ${esc(still.join(", "))}. Signing off accepts the record as it is.</p>`:"<p>All required fields are now filled in.</p>"}`,"Sign-off note","Sign off review","Cancel",still.length?"warn":"ok");
+  if(note==null)return;
+  Object.assign(r.review,{status:"reviewed",reviewedBy:user.name,reviewedAt:new Date().toISOString(),reviewNote:note,acceptedBlank:still});
+  logAct({cat:"Review",action:"Supervisor review signed off",detail:still.length?"Accepted with blank: "+still.join(", "):"All required fields complete",note});
+  persist();render();toast(`Review for record ${r.rn} signed off.`);
+}
+
+/* ===== Drawer: records and database activity ===== */
+const TABS=[["pms","PM records"],["review","Supervisor review"],["billing","Billing"],["issues","Issue site log"],["activity","Activity log"]];let tab="pms";
+function openDrawer(){$("#drawer").classList.add("open");$("#drawer").setAttribute("aria-hidden","false");$("#scrim").classList.add("open");renderDrawer();setTimeout(()=>$("#q").focus(),60)}
+function closeDrawer(){$("#drawer").classList.remove("open");$("#drawer").setAttribute("aria-hidden","true");$("#scrim").classList.remove("open")}
+function renderDrawer(){
+  const inArea=dev=>{const p=DB.ps[dev];return p&&siteOf(p).ServiceArea===area};
+  const counts={pms:DB.pms.filter(r=>inArea(r.ps)).length,review:DB.pms.filter(r=>inArea(r.ps)&&r.review&&r.review.status==="pending").length,billing:DB.billing.filter(b=>inArea(b.ps_id)).length,issues:DB.issueLog.filter(l=>inArea(l.psid)).length,activity:DB.activity.filter(l=>!l.ps||inArea(l.ps)).length};
+  $("#tabs").innerHTML=TABS.map(([k,l])=>`<button role="tab" type="button" data-tab="${k}" aria-selected="${k===tab}">${l}<span class="cnt">${counts[k]}</span></button>`).join("");
+  const q=$("#q").value.trim().toLowerCase(),has=(...a)=>!q||a.some(x=>String(x??"").toLowerCase().includes(q));
+  let html="",n=0;
+  if(tab==="pms"){
+    const list=DB.pms.filter(r=>inArea(r.ps)&&has(r.rn,r.ps,r.tech,r.remedy,r.uno,DB.ps[r.ps].address)).sort((a,b)=>b.date.localeCompare(a.date)||b.rn-a.rn);n=list.length;
+    html=list.slice(0,250).map(r=>{const b=billingFor(r.rn);return `<button type="button" class="rec" data-rn="${r.rn}"><span class="rn">${r.rn}</span><span class="ps">${esc(r.ps)}</span><span class="dt">${esc(fmtD(r.date))}</span><span class="meta">${esc(r.tech||"No tech")}, ${esc(r.comments||"no comment")}, ${esc(DB.ps[r.ps].address)}${b?`, billing ${b.activity_id} ${esc(b.Job_Status)}`:", no billing record"}${r.review&&r.review.status==="pending"?", <b>waiting on review</b>":""}</span></button>`}).join("");
+  } else if(tab==="billing"){
+    const list=DB.billing.filter(b=>inArea(b.ps_id)&&has(b.activity_id,b.ps_id,b.PM_Activity,b.Remedy_Ticket,b.Aps_Technician)).sort((a,b)=>b.activity_id-a.activity_id);n=list.length;
+    html=list.slice(0,250).map(b=>`<div class="rec static"><span class="rn">${b.activity_id}</span><span class="ps">${esc(b.ps_id)}</span><span class="dt">${esc(fmtD(b.Date_of_Service))}</span><span class="meta"><b>${esc(b.Job_Status)}</b>, ${esc(b.Invoice_Type)}, PM record ${b.PM_Activity}, ${esc(b.Customer)}, dispatch ${esc(b.Dispatch_Type)}${b.Remedy_Ticket?", Remedy "+esc(b.Remedy_Ticket):""}</span></div>`).join("");
+  } else if(tab==="issues"){
+    const list=DB.issueLog.filter(l=>inArea(l.psid)&&has(l.psid,l.type,l.category,l.notes)).slice().reverse();n=list.length;
+    html=list.map(l=>`<div class="rec static"><span class="rn">${esc(l.next)}</span><span class="ps">${esc(l.psid)}</span><span class="dt">${esc(fmtTS(l.at))}</span><span class="meta">${esc(l.type)}: ${esc(l.prev)} to ${esc(l.next)}, ${esc(l.category)} / ${esc(l.issueType)}. ${esc(l.notes)} By ${esc(l.by)}.</span></div>`).join("");
+  } else if(tab==="review"){
+    const list=DB.pms.filter(r=>inArea(r.ps)&&r.review&&r.review.status==="pending"&&has(r.rn,r.ps,r.review.by,r.review.reason)).sort((a,b)=>a.review.at.localeCompare(b.review.at));n=list.length;
+    html=list.map(r=>`<button type="button" class="rec" data-rn="${r.rn}"><span class="rn">${r.rn}</span><span class="ps">${esc(r.ps)}</span><span class="dt">${esc(fmtD(r.review.at.slice(0,10)))}</span><span class="meta"><b>Blank: ${esc(r.review.missing.join(", "))}.</b> “${esc(r.review.reason)}” Submitted by ${esc(r.review.by)}.</span></button>`).join("");
+  } else {
+    const list=DB.activity.filter(l=>(!l.ps||inArea(l.ps))&&has(l.rn,l.ps,l.action,l.detail,l.note,l.by,l.cat)).slice().reverse();n=list.length;
+    html=list.slice(0,300).map(l=>`<${l.rn&&DB.pms.some(x=>x.rn===l.rn)?`button type="button" class="rec" data-rn="${l.rn}"`:'div class="rec static"'}><span class="rn">${esc(l.cat)}</span><span class="ps">${esc(l.ps||"")}${l.rn?" · "+l.rn:""}</span><span class="dt">${esc(fmtTS(l.at))}</span><span class="meta"><b>${esc(l.action)}</b>${l.detail?": "+esc(l.detail):""}${l.note?` Note: “${esc(l.note)}”`:""} By ${esc(l.by)}${l.role?" ("+esc(l.role)+")":""}.</span></${l.rn&&DB.pms.some(x=>x.rn===l.rn)?"button":"div"}>`).join("");
+  }
+  $("#q").placeholder={pms:"Search record #, PS ID, tech, ticket or address",review:"Search record #, PS ID or reason",billing:"Search activity ID, PS ID, PM record or ticket",issues:"Search PS ID, category or notes",activity:"Search record #, PS ID, action, note or person"}[tab];
+  $("#recs").innerHTML=html||`<p class="empty">${q?`Nothing matches “${esc($("#q").value)}” in ${esc(area)}.`:{pms:"No PM records yet.",billing:"No billing records yet.",issues:"No issue site changes yet. They’re logged when a PM clears or updates an issue site.",review:"Nothing waiting on review in this area.",activity:"No activity logged yet. Every save, change, billing update, override and review is recorded here."}[tab]}</p>`;
+  $("#recTotal").textContent=`${n} in ${area}`;
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b){tab=b.dataset.tab;renderDrawer()}});
+$("#btnFind").onclick=()=>{tab="pms";openDrawer()};$("#closeDrawer").onclick=closeDrawer;$("#scrim").onclick=closeDrawer;
+$("#q").addEventListener("input",renderDrawer);
+$("#recs").addEventListener("click",e=>{const b=e.target.closest("[data-rn]");if(b)openRecord(+b.dataset.rn)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#drawer").classList.contains("open")&&!$("#dlg").open)closeDrawer()});
+$("#resetDemo").onclick=async()=>{if(!(await yesNo("Reset sample data?","This removes everything saved in this browser and restores the original sample sites and history.","critical","Reset sample data","Cancel")))return;DB=buildDB();persist();newPM();renderDrawer();toast("Sample data restored.")};
+
+/* ===== Start (Form_Load: new record, focus PS ID) ===== */
+load();newPM();
+})();
+</script>
+</body>
+</html>
